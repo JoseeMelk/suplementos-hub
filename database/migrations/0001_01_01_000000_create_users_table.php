@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('slug')->unique();
-            $table->string('display_name');
+            $table->string('slug')->unique()->nullable();
+            $table->string('display_name')->nullable();
             $table->text('bio')->nullable();
             $table->string('avatar')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');

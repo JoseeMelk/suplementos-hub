@@ -6,7 +6,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class EnsureApproved
@@ -15,26 +14,17 @@ class EnsureApproved
     {
         $user = $request->user();
 
-        // Solo aplica a proveedores autenticados
-        if ($user && $user->hasRole('provider')) {
+        if ($user && $user->hasRole('provider') && $user->status !== 'approved') {
 
-            if ($user->status === 'pending') {
-                Auth::logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
-
-                return redirect()->route('login')
-                    ->with('info', 'Tu cuenta está pendiente de aprobación. Te avisaremos por correo cuando esté lista.');
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'ok' => false,
+                    'status' => $user->status,
+                    'message' => 'Cuenta no autorizada'
+                ], 403);
             }
 
-            if ($user->status === 'rejected') {
-                Auth::logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
-
-                return redirect()->route('login')
-                    ->with('error', 'Tu solicitud de cuenta fue rechazada. Contacta al administrador para más información.');
-            }
+            return redirect()->route('login');
         }
 
         return $next($request);
