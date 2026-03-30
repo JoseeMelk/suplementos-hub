@@ -3,20 +3,20 @@ import { API } from '../config';
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('loginForm');
 
-    console.log(API);
-    
-
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = form.querySelector('button[type="submit"]');
-        btn.dis
+
+        // bloquear botón
+        btn.disabled = true;
+        btn.textContent = 'Entrando...';
 
         const formData = new FormData(form);
-        
+
         // Convertir el checkbox a booleano (1 o 0)
         const rememberCheckbox = form.querySelector('input[name="remember"]');
         formData.set('remember', rememberCheckbox.checked ? 1 : 0);
-        
+
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         try {
@@ -38,6 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Errores de validación
                 console.error('Errores de validación:', data.errors);
                 showError(Object.values(data.errors).flat()[0]); //el primer mensaje
+            } else if (response.status === 403) {
+                // por el no permitido por el momento (pendiente o denegado)
+                showError(data.message);
+                return;
             } else {
                 // Credenciales inválidas u otro error
                 showError(data.message || 'Error al iniciar sesión');
@@ -45,6 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Error en la solicitud:', error);
             showError('Error al procesar la solicitud');
+        } finally {
+            // 🔓 reactivar botón
+            btn.disabled = false;
+            btn.textContent = 'Iniciar sesión';
         }
     });
 });

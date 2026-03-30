@@ -16,20 +16,43 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $response = ['ok' => false, 'message' => 'Credenciales inválidas'];
-        $statusCode = 401;
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validated();
         $remember = $request->boolean('remember');
 
-        if (Auth::attempt($credentials, $remember)) {
+        if (Auth::attempt([
+            'email' => $credentials['email'],
+            'password' => $credentials['password']
+        ], $remember)) {
+
+            $user = Auth::user();
+
+            if ($user->hasRole('provider') && $user->status !== 'approved') {
+
+                Auth::logout();
+
+                return response()->json([
+                    'ok' => false,
+                    'status' => $user->status,
+                    'message' => match ($user->status) {
+                        'pending' => 'Tu cuenta está pendiente de aprobación.',
+                        'rejected' => 'Tu cuenta fue rechazada.',
+                    }
+                ], 403);
+            }
+
             $request->session()->regenerate();
-            $response = ['ok' => true, 'message' => 'Inicio de sesión exitoso'];
-            $statusCode = 200;
+
+            return response()->json([
+                'ok' => true,
+                'message' => 'Inicio de sesión exitoso'
+            ]);
         }
 
-        return response()->json($response, $statusCode);
+        return response()->json([
+            'ok' => false,
+            'message' => 'Credenciales inválidas'
+        ], 401);
     }
-
     public function logout(Request $request)
     {
         Auth::logout();
