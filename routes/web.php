@@ -18,3 +18,5 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'ensure.approved'])->group(function () {
     Route::get('/', fn () => view('eje'));
 });
+
+//Route::get('/admin', fn () => view('admin.index'))->name('admin.index'); //Ejemplo de vista admin
