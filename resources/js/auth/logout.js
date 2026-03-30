@@ -1,7 +1,7 @@
 import { API } from '../config';
 console.log(API);
 
-document.getElementById('logout').addEventListener('click', async () => {
+document.getElementById('logout-btn').addEventListener('click', async () => {
     try {
         const response = await fetch(API.LOGOUT_URL, {
             method: 'POST',
