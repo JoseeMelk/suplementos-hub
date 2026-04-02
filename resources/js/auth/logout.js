@@ -1,7 +1,6 @@
 import { API } from '../config';
-console.log(API);
 
-document.getElementById('logout-btn').addEventListener('click', async () => {
+async function logout() {
     try {
         const response = await fetch(API.LOGOUT_URL, {
             method: 'POST',
@@ -24,4 +23,16 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
         console.error('Error en la solicitud:', error);
         alert('Error al procesar la solicitud');
     }
+}
+
+document.getElementById('logout-btn').addEventListener('click', async () => {
+    await logout();
+});
+
+document.getElementById('logout-btn-desktop-sidebar').addEventListener('click', async () => {
+    await logout();
+});
+
+document.getElementById('logout-btn-mobile-sidebar').addEventListener('click', async () => {
+    await logout();
 });

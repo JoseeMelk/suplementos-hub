@@ -92,7 +92,7 @@
 
                 <hr>
 
-                <button class="sidebar-link w-100 text-start border-0 bg-transparent">
+                <button id="logout-btn-desktop-sidebar" class="sidebar-link w-100 text-start border-0 bg-transparent">
                     Cerrar sesión
                 </button>
 
@@ -138,13 +138,15 @@
 
         <hr>
 
-        <button id="logout-btn" class="sidebar-link w-100 text-start border-0 bg-transparent">
+        <button id="logout-btn-mobile-sidebar" class="sidebar-link w-100 text-start border-0 bg-transparent">
             Cerrar sesión
         </button>
 
     </div>
 
 </div>
+
+@include('partials.js-config')
 
 @stack('scripts')
 
