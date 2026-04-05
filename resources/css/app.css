@@ -5,3 +5,10 @@
 body {
   font-family: 'DM Sans', sans-serif;
 }
+
+/* resources/css/app.css */
+.sh-swal-popup {
+    font-family: var(--font-sans) !important;
+    border-radius: var(--radius-lg) !important;
+    font-size: 14px !important;
+}
