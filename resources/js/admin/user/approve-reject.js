@@ -16,16 +16,16 @@ async function approveUser(userId) {
     if (!result.isConfirmed) return;
 
     const updateResponse = await update(userId, { status: 'approved' });
-    if (updateResponse.ok) {
+    if (updateResponse.httpOk) {
         await alert.success('Proveedor aprobado correctamente.', 'Se le notificará al proveedor');
         await reloadPage();
 
-    } else if (updateResponse.code === 422) {
+    } else if (updateResponse.httpStatus === 422) {
         const errorMessage = updateResponse.message ?? 'Error al aprobar proveedor.';
         const firtsError = updateResponse.errors[Object.keys(updateResponse.errors)[0]][0] ?? 'Por favor, inténtalo de nuevo.';
         await alert.error(errorMessage, firtsError);
     }
-    else if (updateResponse.code === 500) {
+    else if (updateResponse.httpStatus === 500) {
         await alert.error('Error al aprobar proveedor.', 'Por favor, inténtalo de nuevo.');
     } else {
         await alert.error('Error inesperado.', 'Por favor, inténtalo mas tarde.');
@@ -43,15 +43,15 @@ async function rejectUser(userId) {
 
     if (!result.isConfirmed) return;
     const updateResponse = await update(userId, { status: 'rejected' });
-    if (updateResponse.ok) {
+    if (updateResponse.httpOk) {
         await alert.success('Proveedor rechazado correctamente.', 'Se le notificará al proveedor');
         await reloadPage();
-    } else if (updateResponse.code === 422) {
+    } else if (updateResponse.httpStatus === 422) {
         const errorMessage = updateResponse.message ?? 'Error al rechazar proveedor.';
         const firtsError = updateResponse.errors[Object.keys(updateResponse.errors)[0]][0] ?? 'Por favor, inténtalo de nuevo.';
         await alert.error(errorMessage, firtsError);
     }
-    else if (updateResponse.code === 500) {
+    else if (updateResponse.httpStatus === 500) {
         await alert.error('Error al rechazar proveedor.', 'Por favor, inténtalo de nuevo.');
     } else {
         await alert.error('Error inesperado.', 'Por favor, inténtalo mas tarde.');

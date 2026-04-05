@@ -89,11 +89,9 @@ async function loadSection(status, section) {
         const res = await fetchUsers(params);
 
         if (!res?.ok) throw new Error(res?.message || 'No se pudo cargar la información.');
-
-        console.log(res);
         
-        const rows = Array.isArray(res.data.data) ? res.data.data : [];
-        const meta = res.data.meta || {};
+        const rows = Array.isArray(res.data) ? res.data : [];
+        const meta = res.meta || {};
         state[status].total = Number(meta.total || 0);
 
         renderRows(section, status, rows);

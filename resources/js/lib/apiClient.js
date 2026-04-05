@@ -16,8 +16,8 @@ export async function apiFetch(url, options = {}, csrfToken = null) {
     const data = await response.json();
 
     return {
-        ok: response.ok,
-        status: response.status,
-        data
+        httpOk: response.ok,
+        httpStatus: response.status,
+        ...data
     };
 }
