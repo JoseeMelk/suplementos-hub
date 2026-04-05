@@ -7,3 +7,13 @@ export async function fetchUsers(params = {}) {
 
     return await apiFetch(`${USER_ROUTES.API}?${query}`);
 }
+
+export async function update(userId, payload) {
+    return await apiFetch(`${USER_ROUTES.UPDATE.replace('{id}', userId)}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    });
+}

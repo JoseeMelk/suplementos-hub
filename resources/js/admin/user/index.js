@@ -129,7 +129,7 @@ function buildRow(status, user) {
 
     if (status === 'pending') {
         return `
-            <tr data-user-id="${id}">
+            <tr data-user-id="${id}" id="pending-user-row-${id}">
                 <td>${name}</td>
                 <td class="text-muted small">${email}</td>
                 <td><span class="badge bg-warning text-dark">pending</span></td>

@@ -68,7 +68,7 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="pending-users">
                     <tr>
                         <td>Juan Pérez</td>
                         <td class="text-muted small">juan@email.com</td>
@@ -253,4 +253,5 @@
 @endsection
 @push('scripts')
 @vite('resources/js/admin/user/index.js')
+@vite('resources/js/admin/user/approve-reject.js')
 @endpush

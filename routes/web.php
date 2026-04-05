@@ -20,9 +20,9 @@ Route::middleware(['auth', 'ensure.approved'])->group(function () {
     Route::get('/', fn () => view('eje'));
 });
 
-Route::prefix('admin/users')
+Route::prefix('admin/')
     //->middleware(['auth', 'ensure.approved'])
     ->group(function () {
-        Route::get('/', [UserController::class, 'index']);
-        Route::get('/api', [UserController::class, 'api']);
+        Route::resource('users', UserController::class)->only('index', 'update');
+        Route::get('users/api', [UserController::class, 'api']);
     });

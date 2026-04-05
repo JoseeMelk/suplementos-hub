@@ -73,7 +73,7 @@
 
                 <p class="sidebar-title pt-3">Gestión</p>
 
-                <a href="#" class="sidebar-link active">
+                <a href="{{ route('users.index') }}" class="sidebar-link active">
                     Proveedores
                     <span class="badge bg-warning text-dark">3</span>
                 </a>

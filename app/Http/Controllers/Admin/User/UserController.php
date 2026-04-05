@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\User\UserApiRequest;
+use App\Http\Requests\Admin\User\UpdateUserStatusRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
@@ -104,9 +105,21 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserStatusRequest $request, User $user)
     {
-        //
+        $response = ['ok' => false, 'message' => 'Error al actualizar el estado del usuario'];
+        $statusCode = 500;
+
+        try {
+            $user->update($request->validated());
+
+            $response = ['ok' => true, 'message' => 'Estado del usuario actualizado correctamente'];
+            $statusCode = 200;
+        } catch (\Exception $e) {
+            Log::error('Error en UserController@update: ' . $e->getMessage());
+        }
+
+        return response()->json($response, $statusCode);
     }
 
     /**
