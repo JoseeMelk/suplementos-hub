@@ -1,5 +1,5 @@
-// admin/users/userService.js
-import { apiFetch } from '../../lib/apiClient';
+// admin/users/user-service.js
+import { apiFetch } from '../../lib/api-client';
 import { USER_ROUTES } from '../routes';
 
 export async function fetchUsers(params = {}) {

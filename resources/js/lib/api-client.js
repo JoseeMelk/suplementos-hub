@@ -1,4 +1,4 @@
-// lib/apiClient.js
+// lib/api-client.js
 import { BASE_URL } from '../config';
 
 export async function apiFetch(url, options = {}, csrfToken = null) {

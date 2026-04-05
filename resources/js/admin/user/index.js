@@ -1,5 +1,4 @@
-// filepath: /home/josee/Documentos/Vorenya/suplementos-hub/resources/js/admin/user/index.js
-import { fetchUsers } from './userService';
+import { fetchUsers } from './user-service';
 
 const TABLE_CONFIG = {
     pending: {

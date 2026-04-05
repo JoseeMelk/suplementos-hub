@@ -1,4 +1,4 @@
-import { update } from './userService';
+import { update } from './user-service';
 import { alert } from '../../lib/alert';
 
 //Funcion temporal por ahora, cuando pueda lo hare con carga dinamica
