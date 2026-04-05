@@ -21,7 +21,7 @@ Route::middleware(['auth', 'ensure.approved'])->group(function () {
 });
 
 Route::prefix('admin/')
-    //->middleware(['auth', 'ensure.approved'])
+    ->middleware(['auth', 'ensure.approved'])
     ->group(function () {
         Route::resource('users', UserController::class)->only('index', 'update');
         Route::get('users/api', [UserController::class, 'api']);

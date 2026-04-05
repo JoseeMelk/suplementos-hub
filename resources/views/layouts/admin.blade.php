@@ -75,7 +75,7 @@
 
                 <a href="{{ route('users.index') }}" class="sidebar-link active">
                     Proveedores
-                    <span class="badge bg-warning text-dark">3</span>
+                    {{-- <span class="badge bg-warning text-dark">3</span> --}}
                 </a>
 
                 {{-- <a href="#" class="sidebar-link">
@@ -121,7 +121,7 @@
 
         <a href="#" class="sidebar-link active">
             Proveedores
-            <span class="badge bg-warning text-dark">3</span>
+            {{-- <span class="badge bg-warning text-dark">3</span> --}}
         </a>
 
         {{-- <a href="#" class="sidebar-link">

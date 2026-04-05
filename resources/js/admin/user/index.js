@@ -155,7 +155,11 @@ function buildRow(status, user) {
                     </span>
                 </td>
                 <td><span class="badge bg-success">approved</span></td>
-                <td class="text-end position-static">
+            </tr>
+        `;
+        /**
+         * POR EL MOMENTO NO TIENE BOTON DE ACCIONES, AGREGAR EN UN FUTURO LO SIGUIENTE
+         * <td class="text-end position-static">
                     <div class="dropdown">
                         <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-boundary="viewport">
                             Acciones
@@ -177,8 +181,7 @@ function buildRow(status, user) {
                         </ul>
                     </div>
                 </td>
-            </tr>
-        `;
+         */
     }
 
     return `
@@ -186,13 +189,16 @@ function buildRow(status, user) {
             <td>${name}</td>
             <td class="text-muted small">${email}</td>
             <td><span class="badge bg-danger">rejected</span></td>
-            <td class="text-end">
+        </tr>
+    `;
+    /**
+     * POR EL MOMENTO NO TIENE BOTON DE ELIMINAR, AGREGAR EN UN FUTURO LO SIGUIENTE
+     *  <td class="text-end">
                 <button class="btn btn-sm btn-outline-danger" data-action="delete" data-id="${id}">
                     Eliminar
                 </button>
-            </td>
-        </tr>
-    `;
+        </td> 
+    */
 }
 
 function renderFooter(section, status, meta) {
