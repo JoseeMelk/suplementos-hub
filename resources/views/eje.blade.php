@@ -1,5 +1,5 @@
 {{-- Cualquier vista del panel proveedor --}}
-@extends('layouts.auth.auth')
+@extends('layouts.admin')
 
 @section('title', 'Mis productos')
 

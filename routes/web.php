@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Admin\User\UserController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -19,4 +20,9 @@ Route::middleware(['auth', 'ensure.approved'])->group(function () {
     Route::get('/', fn () => view('eje'));
 });
 
-//Route::get('/admin', fn () => view('admin.index'))->name('admin.index'); //Ejemplo de vista admin
+Route::prefix('admin/')
+    ->middleware(['auth', 'ensure.approved'])
+    ->group(function () {
+        Route::resource('users', UserController::class)->only('index', 'update');
+        Route::get('users/api', [UserController::class, 'api']);
+    });

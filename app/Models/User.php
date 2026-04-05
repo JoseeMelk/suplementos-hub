@@ -35,4 +35,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Product::class);
     }
+
+    public function scopeIsPending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
+    public function scopeIsApproved($query)
+    {
+        return $query->where('status', 'approved');
+    }
+
+    public function scopeIsRejected($query)
+    {
+        return $query->where('status', 'rejected');
+    }
 }
