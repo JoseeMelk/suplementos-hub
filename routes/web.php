@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\User\UserController;
+use App\Http\Controllers\Provider\ProductController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -21,7 +22,7 @@ Route::middleware(['auth', 'ensure.approved'])->group(function () {
 });
 
 Route::prefix('admin/')
-    ->middleware(['auth', 'ensure.approved'])
+    ->middleware(['auth', 'role:admin'])
     ->group(function () {
         Route::resource('users', UserController::class)->only('index', 'update');
         Route::get('users/api', [UserController::class, 'api']);
