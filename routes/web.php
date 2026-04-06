@@ -27,3 +27,9 @@ Route::prefix('admin/')
         Route::resource('users', UserController::class)->only('index', 'update');
         Route::get('users/api', [UserController::class, 'api']);
     });
+
+Route::prefix('provider/')
+    //->middleware(['auth', 'ensure.approved', 'role:provider'])
+    ->group(function () {
+        Route::resource('products', ProductController::class)->only('index', 'store');
+    });

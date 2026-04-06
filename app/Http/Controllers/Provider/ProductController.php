@@ -11,7 +11,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use App\Services\ImageService;
 
 class ProductController extends Controller
@@ -22,7 +21,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return view('provider.product.index');
     }
 
     /**
