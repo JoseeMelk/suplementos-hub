@@ -56,21 +56,19 @@ class ImageService
     }
 
     private function process($image): string
-{
-    $filename = self::FOLDER . '/' . Str::uuid() . '.webp';
+    {
+        $filename = self::FOLDER . '/' . Str::uuid() . '.webp';
 
-    // 1. Redimensionar
-    $image->cover(self::WIDTH, self::HEIGHT);
+        // 1. Redimensionar
+        $image->cover(self::WIDTH, self::HEIGHT);
 
-    // 2. Codificar (Basado en el link que pasaste)
-    // En v4, toWebp() devuelve un objeto de tipo EncodedImage
-    $encoded = $image->encodeUsingFileExtension(FileExtension::WEBP, quality: self::QUALITY);
+        // 2. Codificar (Basado en el link que pasaste)
+        $encoded = $image->encodeUsingFileExtension(FileExtension::WEBP, quality: self::QUALITY);
 
-    // 3. Guardar en Storage
-    // IMPORTANTE: En v4 debes usar ->toString() para obtener el contenido binario
-    Storage::disk(self::DISK)->put($filename, $encoded->toString());
+        // 3. Guardar en Storage
+        // IMPORTANTE: En v4 debes usar ->toString() para obtener el contenido binario
+        Storage::disk(self::DISK)->put($filename, $encoded->toString());
 
-    return $filename;
-}
-
+        return $filename;
+    }
 }
