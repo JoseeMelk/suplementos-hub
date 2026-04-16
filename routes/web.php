@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Provider\ProductController;
+use App\Http\Controllers\CategoryController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -29,7 +30,10 @@ Route::prefix('admin/')
     });
 
 Route::prefix('provider/')
-    //->middleware(['auth', 'ensure.approved', 'role:provider'])
+    ->middleware(['auth', 'ensure.approved', 'role:provider'])
     ->group(function () {
         Route::resource('products', ProductController::class)->only('index', 'store');
     });
+
+//Rutas para admin y proveedor
+Route::post('categories/api', [CategoryController::class, 'api'])->middleware('auth', 'role:admin|provider');
