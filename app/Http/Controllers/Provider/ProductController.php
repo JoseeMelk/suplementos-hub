@@ -51,7 +51,7 @@ class ProductController extends Controller
                 $path = $this->imageService->processFromUpload($request->file('image'));
                 ProductImage::create([
                     'product_id' => $product->id,
-                    'image_path' => $path
+                    'path' => $path
                 ]);
             }
             DB::commit();
