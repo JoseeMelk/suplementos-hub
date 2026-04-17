@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -61,5 +62,16 @@ class Product extends Model
     {
         return $this->primaryImage?->path
             ?? $this->images()->ordered()->first()?->path;
+    }
+
+    /**
+     * Devuelve el url de la imagen principal o la primera disponible.
+     * Uso: $product->url_main_image
+     */
+    public function getUrlMainImageAttribute(): string
+    {
+        return $this->main_image
+            ? Storage::url($this->main_image)
+            : asset('images/placeholder.webp');
     }
 }
