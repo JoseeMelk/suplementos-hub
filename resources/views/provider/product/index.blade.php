@@ -403,6 +403,7 @@
 @endpush
 
 @push('scripts')
-    @vite(['resources/js/provider/product/store.js'])
+    @vite(['resources/js/provider/product/page/index.js'])
+    @vite(['resources/js/provider/product/page/create.js'])
     @vite(['resources/js/provider/product/picture-preview.js'])
 @endpush

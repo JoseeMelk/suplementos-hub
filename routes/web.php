@@ -33,6 +33,7 @@ Route::prefix('provider/')
     ->middleware(['auth', 'ensure.approved', 'role:provider'])
     ->group(function () {
         Route::resource('products', ProductController::class)->only('index', 'store');
+        Route::get('products/api', [ProductController::class, 'api']);
     });
 
 //Rutas para admin y proveedor
