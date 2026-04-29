@@ -1,12 +1,19 @@
-import { getCategories, getProductById, storeProduct,updateProduct, deleteProduct } from "../services/product-service";
+import { getCategories, getProductById, storeProduct, updateProduct, deleteProduct } from "../services/product-service";
 import { fillEditForm } from "./product-form.handler";
+import { renderProductList } from "./render-product-list";
+import { getFormData } from '../utils/product-helpers';
+import { renderCategorySelect } from '../components/category-select';
 import { openModal, closeModal } from "../../../ui/modals";
 import { alert } from "../../../lib/alert";
 import { handleResponse } from "../../../utils/http-handler";
-import { renderProductList } from "./render-product-list";
-import { getFormData } from '../utils/product-helpers';
 
-export async function createProduct() {
+export async function openCreateModal() {
+    const categories = await getCategories();
+    renderCategorySelect(categories.data, 'categoryProductCreate');
+    openModal('createProductModal');
+}
+
+export async function createProductHandler() {
     const confirm = await alert.confirm(
         '¿Estás seguro de que deseas crear este producto?',
         'El producto será creado y podrá ser visualizado en la plataforma.',
@@ -49,11 +56,9 @@ export async function openEditModal(productId) {
     openModal('editProductModal');
 }
 
-export async function editProduct(productId) {
+export async function editProductHandler(productId) {
     const formData = getFormData('editProductForm');
 
-    console.log('ID:', productId);
-    console.log('FormData:', Object.fromEntries(formData));
     const confirm = await alert.confirm(
         '¿Estás seguro de que deseas actualizar este producto?',
         'Los cambios se guardarán y podrán ser visualizados en la plataforma.',
@@ -64,8 +69,6 @@ export async function editProduct(productId) {
 
     try {
         const response = await updateProduct(productId, formData);
-        console.log('UPDATE: ', response);
-
 
         const ok = await handleResponse(response, {
             successMessage: 'Producto actualizado exitosamente',
@@ -83,7 +86,7 @@ export async function editProduct(productId) {
     }
 }
 
-export async function handleDelete(productId) {
+export async function deleteProductHandler(productId) {
     const confirm = await alert.confirm(
         '¿Eliminar producto?',
         'Esta acción no se puede deshacer',
