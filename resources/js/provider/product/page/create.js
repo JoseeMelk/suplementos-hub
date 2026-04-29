@@ -4,6 +4,7 @@ import { storeProduct, getCategories } from '../services/product-service';
 import { alert } from '../../../lib/alert';
 import { getFormData } from '../utils/product-helpers';
 import { renderCategorySelect } from '../components/category-select';
+import { renderProductList } from '../handlers/render-product-list';
 
 async function init() {
     const btnOpen = document.getElementById('btnOpenCreateProductModal');
@@ -48,6 +49,7 @@ async function init() {
 
             if (ok) {
                 closeModal('createProductModal');
+                await renderProductList(); // Actualizar la lista de productos
             }
 
         } catch (error) {

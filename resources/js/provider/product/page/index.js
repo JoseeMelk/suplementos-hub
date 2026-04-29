@@ -1,17 +1,7 @@
-import { createProductCard } from "../components/product-card";
-import { getProducts } from "../services/product-service";
+import { renderProductList } from "../handlers/render-product-list";
 
 async function init() {
-    const container = document.getElementById('productList');
-    if (!container) return;
-
-    const res = await getProducts();
-
-    container.innerHTML = '';
-
-    res.data.forEach(product => {
-        container.appendChild(createProductCard(product));
-    });
+    await renderProductList();
 }
 
 init();
