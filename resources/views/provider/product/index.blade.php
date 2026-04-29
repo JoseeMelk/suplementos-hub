@@ -250,11 +250,11 @@
                             <!-- Imagen -->
                             <div class="col-md-6">
                                 <label class="form-label">Imagen</label>
-                                <input type="file" name="image" class="form-control" id="imageInput">
+                                <input type="file" name="image" class="form-control" id="createImage">
 
                                 <!-- Preview -->
-                                <div class="mt-2 d-none" id="imagePreviewWrapper">
-                                    <img id="imagePreview" class="img-fluid rounded border" style="max-height: 150px;">
+                                <div class="mt-2 d-none" id="createImagePreviewWrapper">
+                                    <img id="createNewImagePreview" class="img-fluid rounded border" style="max-height: 150px;">
                                 </div>
                             </div>
 
@@ -316,7 +316,6 @@
                         <div class="col-md-6">
                             <label class="form-label">Categoría</label>
                             <select name="category_id" id="editCategory" class="form-control" required>
-                                <option value="">Seleccionar categoría</option>
                             </select>
                         </div>
 
@@ -418,5 +417,4 @@
     @vite(['resources/js/provider/product/page/index.js'])
     @vite(['resources/js/provider/product/page/create.js'])
     @vite(['resources/js/provider/product/page/edit.js'])
-    @vite(['resources/js/provider/product/picture-preview.js'])
 @endpush

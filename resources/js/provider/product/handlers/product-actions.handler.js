@@ -1,10 +1,40 @@
-import { getCategories, getProductById, updateProduct, deleteProduct } from "../services/product-service";
+import { getCategories, getProductById, storeProduct,updateProduct, deleteProduct } from "../services/product-service";
 import { fillEditForm } from "./product-form.handler";
 import { openModal, closeModal } from "../../../ui/modals";
 import { alert } from "../../../lib/alert";
 import { handleResponse } from "../../../utils/http-handler";
 import { renderProductList } from "./render-product-list";
 import { getFormData } from '../utils/product-helpers';
+
+export async function createProduct() {
+    const confirm = await alert.confirm(
+        '¿Estás seguro de que deseas crear este producto?',
+        'El producto será creado y podrá ser visualizado en la plataforma.',
+        'Sí, crear'
+    );
+
+    if (!confirm.isConfirmed) return;
+
+    const formData = getFormData('createProductForm');
+
+    try {
+        const response = await storeProduct(formData);
+
+        const ok = await handleResponse(response, {
+            successMessage: 'Producto creado exitosamente',
+            successDescription: 'El producto ha sido creado y está disponible en la plataforma.',
+            errorMessage: 'Error al crear el producto'
+        });
+
+        if (ok) {
+            closeModal('createProductModal');
+            await renderProductList(); // Actualizar la lista de productos
+        }
+
+    } catch (error) {
+        alert.error('Error', 'Ocurrió un error al crear el producto.');
+    }
+}
 
 export async function openEditModal(productId) {
     const categories = await getCategories();
@@ -35,7 +65,7 @@ export async function editProduct(productId) {
     try {
         const response = await updateProduct(productId, formData);
         console.log('UPDATE: ', response);
-        
+
 
         const ok = await handleResponse(response, {
             successMessage: 'Producto actualizado exitosamente',
