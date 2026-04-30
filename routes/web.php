@@ -25,16 +25,16 @@ Route::middleware(['auth', 'ensure.approved'])->group(function () {
 Route::prefix('admin/')
     ->middleware(['auth', 'role:admin'])
     ->group(function () {
-        Route::resource('users', UserController::class)->only('index', 'update');
         Route::get('users/api', [UserController::class, 'api']);
+        Route::resource('users', UserController::class)->only(['index', 'update']);
     });
 
 Route::prefix('provider/')
     ->middleware(['auth', 'ensure.approved', 'role:provider'])
     ->group(function () {
-        Route::resource('products', ProductController::class)->only('index', 'store');
         Route::get('products/api', [ProductController::class, 'api']);
+        Route::resource('products', ProductController::class)->except(['create', 'edit']);
     });
 
 //Rutas para admin y proveedor
-Route::post('categories/api', [CategoryController::class, 'api'])->middleware('auth', 'role:admin|provider');
+Route::get('categories/api', [CategoryController::class, 'api'])->middleware(['auth', 'role:admin|provider']);

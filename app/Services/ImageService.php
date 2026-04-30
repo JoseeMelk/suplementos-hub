@@ -71,4 +71,9 @@ class ImageService
 
         return $filename;
     }
+
+    public function delete(string $path): void
+    {
+        Storage::disk(self::DISK)->delete($path);
+    }
 }

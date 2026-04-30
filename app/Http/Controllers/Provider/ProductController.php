@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Provider;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Http\Requests\Provider\ProductApiRequest;
 use App\Http\Requests\Provider\StoreProductRequest;
+use App\Http\Requests\Provider\UpdateProductRequest;
 use App\Http\Resources\Provider\ProductResource;
 use App\Services\ImageService;
 use Illuminate\Http\JsonResponse;
@@ -27,7 +27,7 @@ class ProductController extends Controller
                 ->latest()
                 //->paginate($request->per_page);
                 ->get();
-                
+
             return response()->json([
                 'ok' => true,
                 'data' => ProductResource::collection($products),
@@ -48,7 +48,6 @@ class ProductController extends Controller
                 'ok' => false,
                 'message' => 'Error en la solicitud'
             ], 500);
-
         }
     }
 
@@ -85,7 +84,11 @@ class ProductController extends Controller
                 $path = $this->imageService->processFromUpload($request->file('image'));
                 ProductImage::create([
                     'product_id' => $product->id,
-                    'path' => $path
+                    'path' => $path,
+                    'is_primary' => true,
+                    'source' => 'upload',
+                    'sort_order' => 0,
+
                 ]);
             }
             DB::commit();
@@ -102,9 +105,12 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        return response()->json([
+            'ok' => true,
+            'data' => new ProductResource($product)
+        ], 200);
     }
 
     /**
@@ -118,16 +124,72 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $response = ['ok' => false, 'message' => 'Error al actualizar el producto.'];
+        $statusCode = 500;
+
+        try {
+            $data = collect($request->validated())->forget('image')
+                ->filter(fn($value) => !is_null($value)) // Elimina los nulos
+                ->toArray();
+            DB::beginTransaction();
+            $product->update($data);
+
+            if ($request->hasFile('image')) {
+                // 1. Buscamos la imagen primaria actual de este producto usando tu scope
+                $existingImage = $product->images()->primary()->first();
+
+                // 2. Procesamos la nueva imagen con tu servicio
+                $path = $this->imageService->processFromUpload($request->file('image'));
+
+                if ($path) {
+                    // 3. Si ya tenía una, borramos el archivo físico del disco
+                    if ($existingImage) {
+                        $this->imageService->delete($existingImage->path);
+                    }
+
+                    // 4. Actualizamos el registro existente o creamos uno nuevo
+                    // Usamos product_id e is_primary como clave de búsqueda
+                    $product->images()->updateOrCreate(
+                        [
+                            'product_id' => $product->id,
+                            'is_primary' => true
+                        ],
+                        [
+                            'path'       => $path,
+                            'source'     => 'upload',
+                            'sort_order' => 0
+                        ]
+                    );
+                }
+            }
+
+            DB::commit();
+            $response = ['ok' => true, 'message' => 'Producto actualizado exitosamente.'];
+            $statusCode = 200;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error al actualizar el producto en Provider/ProductController: ' . $e->getMessage());
+        }
+
+        return response()->json($response, $statusCode);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        try {
+            foreach ($product->images as $img) {
+                $this->imageService->delete($img->path);
+            }
+            $product->delete();
+            return response()->json(['ok' => true, 'message' => 'Producto eliminado exitosamente.']);
+        } catch (\Exception $e) {
+            Log::error('Error al eliminar el producto en Provider/ProductController: ' . $e->getMessage());
+            return response()->json(['ok' => false, 'message' => 'Error al eliminar el producto.'], 500);
+        }
     }
 }
