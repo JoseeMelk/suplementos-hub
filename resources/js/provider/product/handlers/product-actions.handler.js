@@ -1,4 +1,4 @@
-import { getCategories, getProductById, storeProduct, updateProduct, deleteProduct } from "../services/product-service";
+import { getCategories, getProductById, storeProduct, updateProduct, destroyProduct } from "../services/product-service";
 import { fillEditForm } from "./product-form.handler";
 import { renderProductList } from "./render-product-list";
 import { getFormData } from '../utils/product-helpers';
@@ -95,7 +95,7 @@ export async function deleteProductHandler(productId) {
 
     if (!confirm.isConfirmed) return;
 
-    const response = await deleteProduct(productId);
+    const response = await destroyProduct(productId);
 
     const ok = await handleResponse(response, {
         successMessage: 'Producto eliminado',

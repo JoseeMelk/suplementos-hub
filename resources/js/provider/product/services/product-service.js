@@ -3,7 +3,9 @@ import { PRODUCT_ROUTES, CATEGORY_ROUTES } from '../../routes';
 
 //Obtiene todos los productos, por el momento sin paginacion
 export async function getProducts() {
-    return apiFetch(PRODUCT_ROUTES.API);
+    return apiFetch(PRODUCT_ROUTES.API, {
+        method: 'GET',
+    });
 }
 
 //Recibe un form data como payload
@@ -16,7 +18,7 @@ export async function storeProduct(payload) {
 
 export async function getCategories() {
     return apiFetch(CATEGORY_ROUTES.API, {
-        method: 'POST',
+        method: 'GET',
     });
 }
 
@@ -51,7 +53,7 @@ export async function updateProduct(productId, payload) {
 }
 
 // Eliminar producto
-export async function deleteProduct(productId) {
+export async function destroyProduct(productId) {
     return {
         'ok': true,
         'httpOk': true,
