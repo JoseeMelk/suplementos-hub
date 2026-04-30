@@ -15,7 +15,7 @@ export function createProductCard(product) {
             </div>
 
             <div class="card-body d-flex flex-column">
-                <h6 class="fw-semibold mb-1">${product.name}</h6>
+                <h6 class="fw-semibold mb-1">${product.name} <small class="text-muted"> - ${product.category ?? 'Sin categoría'}</small></h6>
 
                 <span class="text-success fw-bold mb-2">
                     $${product.price}
