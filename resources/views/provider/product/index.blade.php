@@ -135,7 +135,7 @@
     </div>
 
     <!-- PAGINACIÓN -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 mt-4"
+    {{-- <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 mt-4"
         id="paginationWrapper">
 
         <!-- Info -->
@@ -190,11 +190,11 @@
             </ul>
         </nav>
 
-    </div>
+    </div> --}}
 
 
     <!-- MODAL CREAR PRODUCTO -->
-    <div class="modal fade" id="createProductModal" tabindex="-1">
+    <div class="modal fade" id="createProductModal" data-backdrop="static" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content border-0 shadow">
 
@@ -254,7 +254,8 @@
 
                                 <!-- Preview -->
                                 <div class="mt-2 d-none" id="createImagePreviewWrapper">
-                                    <img id="createNewImagePreview" class="img-fluid rounded border" style="max-height: 150px;">
+                                    <img id="createNewImagePreview" class="img-fluid rounded border"
+                                        style="max-height: 150px;">
                                 </div>
                             </div>
 
@@ -278,94 +279,96 @@
 
 
     <!-- MODAL EDITAR PRODUCTO -->
-<div class="modal fade" id="editProductModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content border-0 shadow">
+    <div class="modal fade" id="editProductModal" data-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
 
-            <div class="modal-header">
-                <h5 class="modal-title">Editar producto</h5>
-            </div>
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar producto</h5>
+                </div>
 
-            <div class="modal-body">
-                <form id="editProductForm" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <form id="editProductForm" enctype="multipart/form-data">
 
-                    <!-- ID oculto -->
-                    <input type="hidden" name="id" id="editProductId">
+                        <!-- ID oculto -->
+                        <input type="hidden" name="id" id="editProductId">
 
-                    <div class="row g-3">
+                        <div class="row g-3">
 
-                        <!-- Nombre -->
-                        <div class="col-md-6">
-                            <label class="form-label">Nombre</label>
-                            <input type="text" name="name" id="editName" class="form-control" required>
-                        </div>
-
-                        <!-- Precio -->
-                        <div class="col-md-6">
-                            <label class="form-label">Precio</label>
-                            <input type="number" name="price" id="editPrice" class="form-control" step="0.01" required>
-                        </div>
-
-                        <!-- Descripción -->
-                        <div class="col-12">
-                            <label class="form-label">Descripción</label>
-                            <textarea name="description" id="editDescription" class="form-control" rows="3"></textarea>
-                        </div>
-
-                        <!-- Categoría -->
-                        <div class="col-md-6">
-                            <label class="form-label">Categoría</label>
-                            <select name="category_id" id="editCategory" class="form-control" required>
-                            </select>
-                        </div>
-
-                        <!-- Visible -->
-                        <div class="col-md-6 d-flex align-items-center">
-                            <div class="form-check form-switch mt-3">
-                                <input type="hidden" name="is_visible" value="0">
-                                <input class="form-check-input" type="checkbox" id="editVisible" name="is_visible" value="1">
-                                <label class="form-check-label">Visible</label>
+                            <!-- Nombre -->
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" name="name" id="editName" class="form-control" required>
                             </div>
-                        </div>
 
-                        <!-- Imagen actual -->
-                        <div class="col-md-6">
-                            <label class="form-label">Imagen actual</label>
-                            <div>
-                                <img id="editImagePreview"
-                                    class="img-fluid rounded border"
-                                    style="max-height:150px;">
+                            <!-- Precio -->
+                            <div class="col-md-6">
+                                <label class="form-label">Precio</label>
+                                <input type="number" name="price" id="editPrice" class="form-control" step="0.01"
+                                    required>
                             </div>
-                        </div>
 
-                        <!-- Nueva imagen -->
-                        <div class="col-md-6">
-                            <label class="form-label">Nueva imagen</label>
-                            <input type="file" name="image" id="editImage" class="form-control">
-
-                            <!-- Preview nueva -->
-                            <div class="mt-2 d-none" id="editImagePreviewWrapper">
-                                <img id="editNewImagePreview" class="img-fluid rounded border" style="max-height:150px;">
+                            <!-- Descripción -->
+                            <div class="col-12">
+                                <label class="form-label">Descripción</label>
+                                <textarea name="description" id="editDescription" class="form-control" rows="3"></textarea>
                             </div>
+
+                            <!-- Categoría -->
+                            <div class="col-md-6">
+                                <label class="form-label">Categoría</label>
+                                <select name="category_id" id="editCategory" class="form-control" required>
+                                </select>
+                            </div>
+
+                            <!-- Visible -->
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="form-check form-switch mt-3">
+                                    <input type="hidden" name="is_visible" value="0">
+                                    <input class="form-check-input" type="checkbox" id="editVisible" name="is_visible"
+                                        value="1">
+                                    <label class="form-check-label">Visible</label>
+                                </div>
+                            </div>
+
+                            <!-- Imagen actual -->
+                            <div class="col-md-6">
+                                <label class="form-label">Imagen actual</label>
+                                <div>
+                                    <img id="editImagePreview" class="img-fluid rounded border"
+                                        style="max-height:150px;">
+                                </div>
+                            </div>
+
+                            <!-- Nueva imagen -->
+                            <div class="col-md-6">
+                                <label class="form-label">Nueva imagen</label>
+                                <input type="file" name="image" id="editImage" class="form-control">
+
+                                <!-- Preview nueva -->
+                                <div class="mt-2 d-none" id="editImagePreviewWrapper">
+                                    <img id="editNewImagePreview" class="img-fluid rounded border"
+                                        style="max-height:150px;">
+                                </div>
+                            </div>
+
                         </div>
 
-                    </div>
+                    </form>
+                </div>
 
-                </form>
+                <div class="modal-footer">
+                    <button class="btn btn-warning" id="btnCloseEditProductModal">
+                        Cancelar
+                    </button>
+                    <button class="btn btn-success" id="updateProductBtn">
+                        Actualizar
+                    </button>
+                </div>
+
             </div>
-
-            <div class="modal-footer">
-                <button class="btn btn-warning" id="btnCloseEditProductModal">
-                    Cancelar
-                </button>
-                <button class="btn btn-success" id="updateProductBtn">
-                    Actualizar
-                </button>
-            </div>
-
         </div>
     </div>
-</div>
 @endsection
 
 @push('styles')

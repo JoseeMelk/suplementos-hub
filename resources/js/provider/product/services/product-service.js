@@ -25,39 +25,22 @@ export async function getCategories() {
 //Funciones de ejemplo sin back por el momento
 // Obtener producto por ID
 export async function getProductById(productId) {
-    return {
-        'ok': true,
-        'data': {
-            'id': productId,
-            'name': 'Producto de ejemplo',
-            'price': 100,
-            'description': 'Descripción de ejemplo',
-            'category_id': 1,
-            'is_visible': 1,
-            'image_url': 'http://localhost:8000/storage/products/59c22090-426c-4977-8bec-67959d2f6bdf.webp'
-        }
-    };
+    return apiFetch(PRODUCT_ROUTES.SHOW(productId), {
+        method: 'GET'
+    });
 }
 
 // Actualizar producto
 export async function updateProduct(productId, payload) {
-    return {
-        'ok': true,
-        'httpOk': true,
-        'httpStatus': 200,
-        'data': {
-            'id': productId,
-            ...payload
-        }
-    };
+    return apiFetch(PRODUCT_ROUTES.UPDATE(productId), {
+        method: 'PATCH',
+        body: payload
+    });
 }
 
 // Eliminar producto
 export async function destroyProduct(productId) {
-    return {
-        'ok': true,
-        'httpOk': true,
-        'httpStatus': 200,
-        'data': { id: productId }
-    }; // solo confirma el ID eliminado
+    return apiFetch(PRODUCT_ROUTES.DESTROY(productId), {
+        method: 'DELETE'
+    });
 }

@@ -28,7 +28,7 @@ export async function createProductHandler() {
         const response = await storeProduct(formData);
 
         const ok = await handleResponse(response, {
-            successMessage: 'Producto creado exitosamente',
+            successMessage: 'Producto creado',
             successDescription: 'El producto ha sido creado y está disponible en la plataforma.',
             errorMessage: 'Error al crear el producto'
         });
@@ -59,6 +59,20 @@ export async function openEditModal(productId) {
 export async function editProductHandler(productId) {
     const formData = getFormData('editProductForm');
 
+    for (const key of formData.keys()) {
+        const value = formData.get(key);
+        // Elimina campos vacíos (null, '', undefined)
+        if (value === '' || value === null || value === undefined) {
+            formData.delete(key);
+        }
+    }
+
+    const imageInput = document.getElementById('editImage');
+    if (!imageInput.files || imageInput.files.length === 0) {
+        formData.delete('image'); // no enviar clave 'image' si no hay archivo
+    }
+
+
     const confirm = await alert.confirm(
         '¿Estás seguro de que deseas actualizar este producto?',
         'Los cambios se guardarán y podrán ser visualizados en la plataforma.',
@@ -71,7 +85,7 @@ export async function editProductHandler(productId) {
         const response = await updateProduct(productId, formData);
 
         const ok = await handleResponse(response, {
-            successMessage: 'Producto actualizado exitosamente',
+            successMessage: 'Producto actualizado',
             successDescription: 'El producto ha sido actualizado y está disponible en la plataforma.',
             errorMessage: 'Error al actualizar el producto'
         });

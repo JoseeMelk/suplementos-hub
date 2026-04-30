@@ -108,7 +108,11 @@ export function initModals() {
 
     document.querySelectorAll('.modal').forEach(modal => {
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal(modal.id);
+            const isStatic = modal.dataset.backdrop === 'static';
+
+             if (e.target === modal && !isStatic) {
+                 closeModal(modal.id);
+             }
         });
     });
 }
