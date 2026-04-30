@@ -7,6 +7,9 @@ export async function renderProductList() {
 
     const res = await getProducts();
 
+    console.log(res);
+    
+
     container.innerHTML = '';
 
     res.data.forEach(product => {

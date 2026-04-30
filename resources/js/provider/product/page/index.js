@@ -1,4 +1,4 @@
-import { renderProductList } from "../handlers/render-product-list";
+import { renderProductList } from "../handlers/render-product.handler";
 import { initProductPage } from "./product-page";
 
 async function init() {

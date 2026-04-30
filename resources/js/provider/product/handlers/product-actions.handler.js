@@ -1,6 +1,6 @@
 import { getCategories, getProductById, storeProduct, updateProduct, destroyProduct } from "../services/product-service";
 import { fillEditForm } from "./product-form.handler";
-import { renderProductList } from "./render-product-list";
+import { renderProductList } from "./render-product.handler";
 import { getFormData } from '../utils/product-helpers';
 import { renderCategorySelect } from '../components/category-select';
 import { openModal, closeModal } from "../../../ui/modals";
