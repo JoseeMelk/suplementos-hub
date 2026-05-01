@@ -2,19 +2,25 @@
 
 @section('title', 'Productos')
 
+@section('breadcrumb', 'Mis Productos')
+
 @section('content')
 
-    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mb-3">
-        <div>
-            <h4 style="font-family:'DM Serif Display'">Gestión de productos</h4>
-            <p class="text-muted small mb-0 d-none d-md-flex">Administra tus productos fácilmente</p>
-        </div>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+    <!-- Título y descripción -->
+    <div>
+        <h4 class="font-dm-serif mb-1">Gestión de productos</h4>
+        <p class="text-muted small mb-0 d-none d-md-flex">Administra tus productos fácilmente</p>
+    </div>
 
-        <button class="btn btn-sm btn-success" id="btnOpenCreateProductModal">
-            <i class="bi-plus-circle"></i>
+    <!-- Botón -->
+    <div>
+        <button class="btn btn-success btn-sm" id="btnOpenCreateProductModal">
+            <i class="bi-plus-circle me-1"></i>
             Nuevo Producto
         </button>
     </div>
+</div>
 
     <!-- STATS -->
     <div class="row g-3 mb-4 d-none d-md-flex">
@@ -44,45 +50,55 @@
 
     <!-- FILTROS Y BUSCADOR -->
     <div class="card border-0 shadow-sm mb-4">
-        <div class="card-body">
+        <!-- Header con botón colapsable -->
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h6 class="mb-0 font-dm-serif">Filtros y buscador</h6>
+            <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse"
+                data-bs-target="#filterCardBody" aria-expanded="false" aria-controls="filterCardBody" id="toggleFilterCard">
+                <i class="bi bi-chevron-down"></i>
+            </button>
+        </div>
 
-            <div class="row g-3 align-items-end">
+        <!-- Contenido colapsable -->
+        <div id="filterCardBody" class="collapse">
+            <div class="card-body">
+                <div class="row g-3 align-items-end">
 
-                <!-- Buscador -->
-                <div class="col-md-4">
-                    <label class="form-label small text-muted">Buscar</label>
-                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre...">
-                    <div class="invalid-feedback" id="searchError">
-                        El nombre debe tener más de 3 caracteres
+                    <!-- Buscador -->
+                    <div class="col-md-4">
+                        <label class="form-label small text-muted">Buscar</label>
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre...">
+                        <div class="invalid-feedback" id="searchError">
+                            El nombre debe tener más de 3 caracteres
+                        </div>
                     </div>
-                </div>
 
-                <!-- Categoría -->
-                <div class="col-md-3">
-                    <label class="form-label small text-muted">Categoría</label>
-                    <select id="categoryFilter" class="form-select">
-                    </select>
-                </div>
+                    <!-- Categoría -->
+                    <div class="col-md-3">
+                        <label class="form-label small text-muted">Categoría</label>
+                        <select id="categoryFilter" class="form-select"></select>
+                    </div>
 
-                <!-- Estado -->
-                <div class="col-md-3">
-                    <label class="form-label small text-muted">Estado</label>
-                    <select id="statusFilter" class="form-select">
-                    </select>
-                </div>
+                    <!-- Estado -->
+                    <div class="col-md-3">
+                        <label class="form-label small text-muted">Estado</label>
+                        <select id="statusFilter" class="form-select"></select>
+                    </div>
 
-                <!-- Botón enviar y reset -->
-                <div class="col-md-2 d-flex gap-2">
-                    <button class="btn btn-outline-primary w-100" id="btnFilterSubmit">
-                        Filtrar
-                    </button>
-                    <button class="btn btn-outline-secondary w-100" id="resetFilters">
-                        Limpiar
-                    </button>
-                </div>
+                    <!-- Botón enviar y reset -->
+                    <div class="col-md-2">
+                        <div class="d-flex flex-column gap-2 h-100 justify-content-end">
+                            <button class="btn btn-outline-success w-100" id="btnFilterSubmit">
+                                Filtrar
+                            </button>
+                            <button class="btn btn-outline-secondary w-100" id="resetFilters">
+                                Limpiar
+                            </button>
+                        </div>
+                    </div>
 
+                </div>
             </div>
-
         </div>
     </div>
 
@@ -166,15 +182,15 @@
                             <!-- Nombre -->
                             <div class="col-md-6">
                                 <label class="form-label">Nombre</label>
-                                <input type="text" name="name" class="form-control" placeholder="Nombre del producto"
-                                    required>
+                                <input type="text" name="name" class="form-control"
+                                    placeholder="Nombre del producto" required>
                             </div>
 
                             <!-- Precio -->
                             <div class="col-md-6">
                                 <label class="form-label">Precio</label>
-                                <input type="number" name="price" class="form-control" step="0.01" placeholder="0.00"
-                                    required>
+                                <input type="number" name="price" class="form-control" step="0.01"
+                                    placeholder="0.00" required>
                             </div>
 
                             <!-- Descripción -->
@@ -369,9 +385,28 @@
             padding: 4px;
             background: #fff;
         }
+
+        .font-dm-serif {
+            font-family: 'DM Serif Display', serif;
+        }
     </style>
 @endpush
 
 @push('scripts')
+    <script>
+        // Cambiar ícono al colapsar/expandir
+        const filterCardBody = document.getElementById('filterCardBody');
+        const toggleButtonIcon = document.querySelector('#toggleFilterCard i');
+
+        filterCardBody.addEventListener('show.bs.collapse', () => {
+            toggleButtonIcon.classList.remove('bi-chevron-down');
+            toggleButtonIcon.classList.add('bi-chevron-up');
+        });
+
+        filterCardBody.addEventListener('hide.bs.collapse', () => {
+            toggleButtonIcon.classList.remove('bi-chevron-up');
+            toggleButtonIcon.classList.add('bi-chevron-down');
+        });
+    </script>
     @vite(['resources/js/provider/product/page/index.js'])
 @endpush

@@ -17,9 +17,7 @@ export async function renderProductList() {
 
     const res = await getProducts(filter);
 
-    container.innerHTML = '';
-    console.log(res);
-    
+    container.innerHTML = '';    
 
     if (!res.data) {
         container.innerHTML = productNotFound('No se encontraron productos existentes.');
