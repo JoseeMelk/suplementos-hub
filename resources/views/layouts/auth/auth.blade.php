@@ -13,7 +13,7 @@
 
     <style>
         body {
-            background: linear-gradient(135deg, #f7f7f5 0%, #f0f0ed 100%);
+            background: #f7f7f5;
             font-family: 'DM Sans', sans-serif;
         }
 

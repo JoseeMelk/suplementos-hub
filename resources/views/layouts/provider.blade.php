@@ -9,6 +9,8 @@
     <title>@yield('title', 'Admin') — Suplementos Hub</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/css/nav/nav-logo.css')
+    @vite('resources/css/template/sidebar.css')
 
     <style>
         body {
@@ -17,50 +19,9 @@
             color: #1a1a18;
         }
 
-        .logo {
-            font-family: 'DM Serif Display';
-            color: #0F6E56;
-        }
-
-        .sidebar-link {
-            font-size: 14px;
-            color: #6c757d;
-            text-decoration: none;
-            padding: 10px 16px;
-            display: flex;
-            justify-content: space-between;
-            border-left: 3px solid transparent;
-        }
-
-        .sidebar-link:hover {
-            background: #f8f9fa;
-            color: #0F6E56;
-        }
-
-        .sidebar-link.active {
-            background: #E1F5EE;
-            color: #0F6E56;
-            font-weight: 500;
-            border-left-color: #0F6E56;
-        }
-
-        .sidebar-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: #999;
-            padding: 0 16px;
-            margin-top: 16px;
-        }
-
-        .admin-badge {
-            background: #FFF3CD;
-            color: #856404;
-            font-size: 11px;
-        }
-
         .layout-row {
-        min-height: calc(100vh - 60px - 73px); /* ajusta según tu navbar y footer */
-    }
+            min-height: calc(100vh - 60px - 73px);
+        }
     </style>
 
     @stack('styles')
@@ -79,9 +40,13 @@
 
                     <p class="sidebar-title pt-3">Gestión</p>
 
-                    <a href="{{ route('products.index') }}" class="sidebar-link active">
+                    <a href="{{ route('products.index') }}" class="sidebar-link" data-href="{{ route('products.index') }}">
                         Mis Productos
                         {{-- <span class="badge bg-warning text-dark">3</span> --}}
+                    </a>
+
+                    <a href="{{ route('provider.profile') }}" class="sidebar-link" data-href="{{ route('provider.profile') }}">
+                        Mi Perfil
                     </a>
 
                     {{-- <a href="#" class="sidebar-link">
@@ -135,9 +100,13 @@
 
             <p class="sidebar-title">Gestión</p>
 
-            <a href="{{ route('products.index') }}" class="sidebar-link active">
+            <a href="{{ route('products.index') }}" class="sidebar-link" data-href="{{ route('products.index') }}">
                 Mis Productos
                 {{-- <span class="badge bg-warning text-dark">3</span> --}}
+            </a>
+
+            <a href="{{ route('provider.profile') }}" class="sidebar-link" data-href="{{ route('provider.profile') }}">
+                Mi Perfil
             </a>
 
             {{-- <a href="#" class="sidebar-link">
@@ -165,6 +134,22 @@
     @include('partials.js-config')
 
     @include('partials.footer')
+
+    <script>
+        // Activar link del sidebar según la URL actual
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentPath = window.location.pathname;
+            const sidebarLinks = document.querySelectorAll('.sidebar-link[data-href]');
+            
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                const linkPath = new URL(link.dataset.href, window.location.origin).pathname;
+                if (currentPath === linkPath) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 
     @stack('scripts')
 

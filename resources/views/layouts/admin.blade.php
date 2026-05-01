@@ -8,53 +8,14 @@
     <title>@yield('title', 'Admin') — Suplementos Hub</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/css/nav/nav-logo.css')
+    @vite('resources/css/template/sidebar.css')
 
     <style>
         body {
             font-family: 'DM Sans', sans-serif;
             background: #f7f7f5;
             color: #1a1a18;
-        }
-
-        .logo {
-            font-family: 'DM Serif Display';
-            color: #0F6E56;
-        }
-
-        .sidebar-link {
-            font-size: 14px;
-            color: #6c757d;
-            text-decoration: none;
-            padding: 10px 16px;
-            display: flex;
-            justify-content: space-between;
-            border-left: 3px solid transparent;
-        }
-
-        .sidebar-link:hover {
-            background: #f8f9fa;
-            color: #0F6E56;
-        }
-
-        .sidebar-link.active {
-            background: #E1F5EE;
-            color: #0F6E56;
-            font-weight: 500;
-            border-left-color: #0F6E56;
-        }
-
-        .sidebar-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: #999;
-            padding: 0 16px;
-            margin-top: 16px;
-        }
-
-        .admin-badge {
-            background: #FFF3CD;
-            color: #856404;
-            font-size: 11px;
         }
     </style>
 

@@ -1,0 +1,21 @@
+.logo {
+    font-family: 'DM Serif Display';
+    color: #0F6E56;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.logo:hover {
+    color: #085041;
+    transform: translateY(-2px);
+}
+
+.role-badge {
+    background: #FFF3CD;
+    color: #856404;
+    font-size: 11px;
+}
