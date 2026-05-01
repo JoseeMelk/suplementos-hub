@@ -34,7 +34,11 @@ Route::prefix('provider/')
     ->group(function () {
         Route::get('products/api', [ProductController::class, 'api']);
         Route::resource('products', ProductController::class)->except(['create', 'edit']);
+        Route::get('profile', fn () => view('provider.profile'))->name('provider.profile');
     });
 
 //Rutas para admin y proveedor
 Route::get('categories/api', [CategoryController::class, 'api'])->middleware(['auth', 'role:admin|provider']);
+
+// Ruta pública para catálogo de proveedores
+Route::get('catalogo/{slug}', fn () => view('public.catalog'))->name('public.catalog');
