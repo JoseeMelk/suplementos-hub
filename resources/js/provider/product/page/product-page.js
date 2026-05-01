@@ -3,6 +3,7 @@ import { setupImagePreview } from '../utils/image-preview';
 import { openCreateModal, createProductHandler, openEditModal, editProductHandler, deleteProductHandler } from '../handlers/product-actions.handler';
 import { renderProductList } from "../handlers/render-product.handler";
 import { renderFilter, getFilters, validateSearchInput, resetFilters } from '../handlers/filter-actions.handler';
+import { resetPagination } from '../handlers/pagination-actions.handler';
 
 export async function initProductPage() {
     await renderProductList(); //Renderizar productos
@@ -17,11 +18,13 @@ export async function initProductPage() {
     });
 
     btnFilterSubmit.addEventListener('click', async () => {
+        resetPagination(); // Resetear a página 1 cuando se aplican filtros
         await renderProductList();
     });
 
     btnResetFilters.addEventListener('click', async () => {
         await resetFilters();
+        resetPagination(); // Resetear a página 1 cuando se limpian filtros
         await renderProductList();
     });
 
