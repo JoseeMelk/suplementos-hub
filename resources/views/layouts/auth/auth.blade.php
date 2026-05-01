@@ -9,19 +9,12 @@
     <title>@yield('title', 'Auth') — Suplementos Hub</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/css/nav/nav-auth.css')
 
     <style>
         body {
-            background: #f7f7f5;
+            background: linear-gradient(135deg, #f7f7f5 0%, #f0f0ed 100%);
             font-family: 'DM Sans', sans-serif;
-        }
-
-        .auth-wrapper {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
         }
 
         .auth-card {
@@ -30,21 +23,14 @@
             background: #fff;
             border: 1px solid #e0dfd8;
             border-radius: 12px;
-            padding: 28px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
-        .auth-logo {
-            font-family: 'DM Serif Display';
-            color: #0F6E56;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .auth-sub {
-            text-align: center;
-            font-size: 13px;
-            color: #6b6b67;
-            margin-bottom: 20px;
+        @media (min-width: 576px) {
+            .auth-card {
+                padding: 28px;
+            }
         }
 
         .btn-main {
@@ -57,46 +43,26 @@
             background: #085041;
             color: #fff;
         }
-
-        .auth-nav {
-            background: #fff;
-            border-bottom: 1px solid #e0dfd8;
-            padding: 12px 0;
-        }
-
-        .auth-logo {
-            font-family: 'DM Serif Display';
-            color: #0F6E56;
-            font-size: 18px;
-        }
-
-        .auth-link {
-            font-size: 13px;
-            color: #6b6b67;
-            text-decoration: none;
-        }
-
-        .auth-link:hover {
-            color: #0F6E56;
-        }
     </style>
 
     @stack('styles')
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     @include('partials.nav-auth')
-    <div class="auth-wrapper">
+    
+    <main class="flex-grow-1 d-flex align-items-center justify-content-center p-3">
         <div class="auth-card">
-
-            <div class="auth-logo">
+            <h2 class="text-center mb-3 fw-semibold font-dm-serif" style="font-size: clamp(1.25rem, 5vw, 1.75rem);">
                 suplementos hub
-            </div>
+            </h2>
 
             @yield('content')
-
         </div>
-    </div>
+    </main>
+
+    @include('partials.footer')
+
     @include('partials.js-config')
 
     @stack('scripts')
