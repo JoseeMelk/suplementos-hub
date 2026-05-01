@@ -2,10 +2,28 @@ import { closeModal } from '../../../ui/modals';
 import { setupImagePreview } from '../utils/image-preview';
 import { openCreateModal, createProductHandler, openEditModal, editProductHandler, deleteProductHandler } from '../handlers/product-actions.handler';
 import { renderProductList } from "../handlers/render-product.handler";
+import { renderFilter, getFilters, validateSearchInput, resetFilters } from '../handlers/filter-actions.handler';
 
 export async function initProductPage() {
-    await renderProductList();
-    const container = document.getElementById('productList'); 
+    await renderProductList(); //Renderizar productos
+    await renderFilter(); //Renderizar filtros0
+
+    // ---------- FILTROS ----------
+    const btnFilterSubmit = document.getElementById('btnFilterSubmit');
+    const btnResetFilters = document.getElementById('resetFilters');
+
+    document.getElementById('searchInput').addEventListener('input', () => {
+        validateSearchInput();
+    });
+
+    btnFilterSubmit.addEventListener('click', async () => {
+        await renderProductList();
+    });
+
+    btnResetFilters.addEventListener('click', async () => {
+        await resetFilters();
+        await renderProductList();
+    });
 
     // ---------- CREATE MODAL ----------
     const btnOpenCreate = document.getElementById('btnOpenCreateProductModal');
@@ -36,6 +54,7 @@ export async function initProductPage() {
     }
 
     // ---------- EDIT MODAL ----------
+    const container = document.getElementById('productList');
     const btnCloseEdit = document.getElementById('btnCloseEditProductModal');
     const btnSaveEdit = document.getElementById('updateProductBtn');
 

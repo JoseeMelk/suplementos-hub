@@ -52,16 +52,15 @@
                 <div class="col-md-4">
                     <label class="form-label small text-muted">Buscar</label>
                     <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre...">
+                    <div class="invalid-feedback" id="searchError">
+                        El nombre debe tener más de 3 caracteres
+                    </div>
                 </div>
 
                 <!-- Categoría -->
                 <div class="col-md-3">
                     <label class="form-label small text-muted">Categoría</label>
                     <select id="categoryFilter" class="form-select">
-                        <option value="">Todas</option>
-                        <option value="1">Suplementos</option>
-                        <option value="2">Proteínas</option>
-                        <option value="3">Accesorios</option>
                     </select>
                 </div>
 
@@ -69,15 +68,15 @@
                 <div class="col-md-3">
                     <label class="form-label small text-muted">Estado</label>
                     <select id="statusFilter" class="form-select">
-                        <option value="">Todos</option>
-                        <option value="1">Visibles</option>
-                        <option value="0">Ocultos</option>
                     </select>
                 </div>
 
-                <!-- Botón reset -->
-                <div class="col-md-2 d-grid">
-                    <button class="btn btn-outline-secondary" id="resetFilters">
+                <!-- Botón enviar y reset -->
+                <div class="col-md-2 d-flex gap-2">
+                    <button class="btn btn-outline-primary w-100" id="btnFilterSubmit">
+                        Filtrar
+                    </button>
+                    <button class="btn btn-outline-secondary w-100" id="resetFilters">
                         Limpiar
                     </button>
                 </div>
@@ -89,53 +88,10 @@
 
     <!-- GRID PRODUCTOS -->
     <div class="row g-4" id="productList">
-
-        @for ($i = 0; $i < 6; $i++)
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm product-card">
-
-                    <!-- Imagen -->
-                    <div class="position-relative">
-                        <img src="https://misterfitness.com.mx/img/p/5/0/50-large_default.jpg" class="card-img-top"
-                            alt="Producto">
-
-                        <!-- Badge -->
-                        <span class="badge bg-success position-absolute top-0 end-0 m-2">
-                            Visible
-                        </span>
-                    </div>
-
-                    <div class="card-body d-flex flex-column">
-
-                        <h6 class="fw-semibold mb-1">Nombre del producto</h6>
-
-                        <span class="text-success fw-bold mb-2">$100.00</span>
-
-                        <p class="text-muted small mb-3">
-                            Descripción breve del producto para mostrar información relevante.
-                        </p>
-
-                        <!-- Acciones -->
-                        <div class="mt-auto d-flex gap-2">
-                            <button class="btn btn-sm btn-outline-primary w-100">
-                                <i class="bi-pencil"></i>
-                                Editar
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger w-100">
-                                <i class="bi-trash"></i>
-                                Eliminar
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        @endfor
-
     </div>
 
     <!-- PAGINACIÓN -->
-    {{-- <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 mt-4"
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 mt-4"
         id="paginationWrapper">
 
         <!-- Info -->
@@ -190,7 +146,7 @@
             </ul>
         </nav>
 
-    </div> --}}
+    </div>
 
 
     <!-- MODAL CREAR PRODUCTO -->
@@ -210,15 +166,15 @@
                             <!-- Nombre -->
                             <div class="col-md-6">
                                 <label class="form-label">Nombre</label>
-                                <input type="text" name="name" class="form-control"
-                                    placeholder="Nombre del producto" required>
+                                <input type="text" name="name" class="form-control" placeholder="Nombre del producto"
+                                    required>
                             </div>
 
                             <!-- Precio -->
                             <div class="col-md-6">
                                 <label class="form-label">Precio</label>
-                                <input type="number" name="price" class="form-control" step="0.01"
-                                    placeholder="0.00" required>
+                                <input type="number" name="price" class="form-control" step="0.01" placeholder="0.00"
+                                    required>
                             </div>
 
                             <!-- Descripción -->

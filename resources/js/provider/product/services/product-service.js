@@ -2,8 +2,11 @@ import { apiFetch } from '../../../lib/api-client';
 import { PRODUCT_ROUTES, CATEGORY_ROUTES } from '../../routes';
 
 //Obtiene todos los productos, por el momento sin paginacion
-export async function getProducts() {
-    return apiFetch(PRODUCT_ROUTES.API, {
+export async function getProducts(params = {}) {
+
+    const query = new URLSearchParams(params);
+
+    return apiFetch(`${PRODUCT_ROUTES.API}?${query}`, {
         method: 'GET',
     });
 }

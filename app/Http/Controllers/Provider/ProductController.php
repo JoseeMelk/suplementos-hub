@@ -21,22 +21,38 @@ class ProductController extends Controller
     public function api(ProductApiRequest $request)
     {
         try {
-            $products = Product::query()
+            $query = Product::query()
                 ->where('user_id', Auth::id())
-                ->with('category') // evita N+1
+                ->with('category');
+
+            // 🔍 Buscador
+            $query->when($request->search, function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%');
+            });
+
+            // 📂 Categoría
+            $query->when($request->category_id, function ($q) use ($request) {
+                $q->where('category_id', $request->category_id);
+            });
+
+            // 👁️ Estado
+            $query->when($request->is_visible !== null, function ($q) use ($request) {
+                $q->where('is_visible', $request->is_visible);
+            });
+
+            $products = $query
                 ->latest()
-                //->paginate($request->per_page);
-                ->get();
+                ->paginate($request->per_page);
 
             return response()->json([
                 'ok' => true,
                 'data' => ProductResource::collection($products),
-                // 'meta' => [
-                //     'current_page' => $products->currentPage(),
-                //     'last_page'    => $products->lastPage(),
-                //     'per_page'     => $products->perPage(),
-                //     'total'        => $products->total(),
-                // ],
+                'meta' => [
+                    'current_page' => $products->currentPage(),
+                    'last_page'    => $products->lastPage(),
+                    'per_page'     => $products->perPage(),
+                    'total'        => $products->total(),
+                ],
             ]);
         } catch (\Throwable $e) {
             Log::error('Error en ProductController@api', [

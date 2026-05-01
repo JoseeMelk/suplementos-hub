@@ -25,8 +25,11 @@ class ProductApiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page' => 'nullable|integer|min:1',
-            //'per_page' => 'nullable|integer|min:1|max:15',
+            'page'        => 'nullable|integer|min:1',
+            'per_page'    => 'nullable|integer|min:1|max:15',
+            'search'      => 'nullable|string|max:255',
+            'category_id' => 'nullable|integer|exists:categories,id',
+            'is_visible'  => 'nullable|in:0,1',
         ];
     }
 
@@ -34,8 +37,11 @@ class ProductApiRequest extends FormRequest
     {
         return [
             'page.min' => 'La página debe ser un número entero positivo.',
-            // 'per_page.max' => 'El máximo de registros por página es 15.',
-            // 'per_page.min' => 'El mínimo de registros por página es 1.',
+            'per_page.max' => 'El máximo de registros por página es 15.',
+            'per_page.min' => 'El mínimo de registros por página es 1.',
+            'search.max' => 'La búsqueda no puede exceder los 255 caracteres.',
+            'category_id.exists' => 'La categoría seleccionada no existe.',
+            'is_visible.in' => 'El estado debe ser 0 o 1.',
         ];
     }
 
@@ -43,7 +49,10 @@ class ProductApiRequest extends FormRequest
     {
         return [
             'page' => 'página',
-            // 'per_page' => 'registros por página',
+            'per_page' => 'registros por página',
+            'search' => 'búsqueda',
+            'category_id' => 'categoría',
+            'is_visible' => 'estado',
         ];
     }
 
@@ -51,7 +60,7 @@ class ProductApiRequest extends FormRequest
     {
         $this->merge([
             'page' => $this->page ?? 1,
-            // 'per_page' => $this->per_page ?? 15,
+            'per_page' => $this->per_page ?? 15,
         ]);
     }
 
