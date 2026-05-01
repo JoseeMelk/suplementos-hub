@@ -7,23 +7,23 @@
 @section('content')
 
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
-    <!-- Título y descripción -->
-    <div>
-        <h4 class="font-dm-serif mb-1">Gestión de productos</h4>
-        <p class="text-muted small mb-0 d-none d-md-flex">Administra tus productos fácilmente</p>
-    </div>
+        <!-- Título y descripción -->
+        <div>
+            <h4 class="font-dm-serif mb-1">Gestión de productos</h4>
+            <p class="text-muted small mb-0 d-none d-md-flex">Administra tus productos fácilmente</p>
+        </div>
 
-    <!-- Botón -->
-    <div>
-        <button class="btn btn-success btn-sm" id="btnOpenCreateProductModal">
-            <i class="bi-plus-circle me-1"></i>
-            Nuevo Producto
-        </button>
+        <!-- Botón -->
+        <div>
+            <button class="btn btn-success btn-sm" id="btnOpenCreateProductModal">
+                <i class="bi-plus-circle me-1"></i>
+                Nuevo Producto
+            </button>
+        </div>
     </div>
-</div>
 
     <!-- STATS -->
-    <div class="row g-3 mb-4 d-none d-md-flex">
+    {{-- <div class="row g-3 mb-4 d-none d-md-flex">
 
         <div class="col-6 col-md-3">
             <div class="card shadow-sm border-0 text-center p-3">
@@ -45,7 +45,7 @@
                 <h5 class="text-danger mb-0">8</h5>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     <!-- FILTROS Y BUSCADOR -->
@@ -182,15 +182,15 @@
                             <!-- Nombre -->
                             <div class="col-md-6">
                                 <label class="form-label">Nombre</label>
-                                <input type="text" name="name" class="form-control"
-                                    placeholder="Nombre del producto" required>
+                                <input type="text" name="name" class="form-control" placeholder="Nombre del producto"
+                                    required>
                             </div>
 
                             <!-- Precio -->
                             <div class="col-md-6">
                                 <label class="form-label">Precio</label>
-                                <input type="number" name="price" class="form-control" step="0.01"
-                                    placeholder="0.00" required>
+                                <input type="number" name="price" class="form-control" step="0.01" placeholder="0.00"
+                                    required>
                             </div>
 
                             <!-- Descripción -->
