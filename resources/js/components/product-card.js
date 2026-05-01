@@ -1,6 +1,6 @@
 export function createProductCard(product) {
     const col = document.createElement('div');
-    col.className = 'col-12 col-sm-6 col-lg-4';
+    col.className = 'col-6 col-md-4 col-lg-3';
 
     col.innerHTML = `
         <div class="card h-100 border-0 shadow-sm product-card">
@@ -25,7 +25,7 @@ export function createProductCard(product) {
                     ${product.description ?? ''}
                 </p>
 
-                <div class="mt-auto d-flex gap-2">
+                <div class="mt-auto d-flex flex-column flex-md-row gap-2">
                     <button class="btn btn-sm btn-outline-primary w-100 btn-edit" data-id="${product.id}">
                         Editar
                     </button>

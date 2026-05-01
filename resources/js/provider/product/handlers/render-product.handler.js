@@ -11,8 +11,9 @@ export async function renderProductList() {
     const filter = getFilters();
     const currentPage = getCurrentPage();
 
-    // Agregar página al filtro
+    // Agregar página y cantidad de productos al filtro
     filter.page = currentPage;
+    filter.per_page = 12;
 
     Object.keys(filter).forEach(key => {
         if (filter[key] === null || filter[key] === '') {
