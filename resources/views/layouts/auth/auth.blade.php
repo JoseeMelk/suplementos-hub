@@ -10,6 +10,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @vite('resources/css/nav/nav-auth.css')
+    @vite('resources/css/nav/nav-logo.css')
 
     <style>
         body {

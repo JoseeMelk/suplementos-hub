@@ -9,7 +9,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @vite('resources/css/nav/nav-logo.css')
-    @vite('resources/css/template/sidebar.css')
+    @vite('resources/css/layout/sidebar.css')
 
     <style>
         body {
