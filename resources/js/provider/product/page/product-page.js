@@ -1,4 +1,4 @@
-import { closeModal } from '../../../ui/modals';
+import { closeModal } from '../../../utils/modals';
 import { setupImagePreview } from '../utils/image-preview';
 import { openCreateModal, createProductHandler, openEditModal, editProductHandler, deleteProductHandler } from '../handlers/product-actions.handler';
 import { renderProductList } from "../handlers/render-product.handler";

@@ -1,4 +1,4 @@
-// ui/modals.js
+// components/modals.js
 
 let activeModal = null;
 let backdrop    = null;

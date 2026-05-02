@@ -1,6 +1,6 @@
 import './bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import { initModals } from './ui/modals';
+import { initModals } from './utils/modals';
 
 initModals();

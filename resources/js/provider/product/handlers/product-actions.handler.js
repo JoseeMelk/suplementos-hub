@@ -3,7 +3,7 @@ import { fillEditForm } from "./product-form.handler";
 import { renderProductList } from "./render-product.handler";
 import { getFormData } from '../utils/product-helpers';
 import { renderCategorySelect } from '../components/category-select';
-import { openModal, closeModal } from "../../../ui/modals";
+import { openModal, closeModal } from "../../../utils/modals";
 import { alert } from "../../../lib/alert";
 import { handleResponse } from "../../../utils/http-handler";
 
