@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Provider\ProductController;
+use App\Http\Controllers\Provider\ProviderSlugController;
+use App\Http\Controllers\Provider\ProviderProfileController;
 use App\Http\Controllers\CategoryController;
 
 Route::middleware('guest')->group(function () {
@@ -34,7 +36,8 @@ Route::prefix('provider/')
     ->group(function () {
         Route::get('products/api', [ProductController::class, 'api']);
         Route::resource('products', ProductController::class)->except(['create', 'edit']);
-        Route::get('profile', fn () => view('provider.profile'))->name('provider.profile');
+        Route::resource('profiles', ProviderProfileController::class)->only(['index']);
+        Route::resource('slugs', ProviderSlugController::class)->only(['store']);
     });
 
 //Rutas para admin y proveedor

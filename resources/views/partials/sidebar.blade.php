@@ -8,7 +8,7 @@
             {{-- <span class="badge bg-warning text-dark">3</span> --}}
         </a>
 
-        <a href="{{ route('provider.profile') }}" class="sidebar-link" data-href="{{ route('provider.profile') }}">
+        <a href="{{ route('profiles.index') }}" class="sidebar-link" data-href="{{ route('profiles.index') }}">
             Mi Perfil
         </a>
 
