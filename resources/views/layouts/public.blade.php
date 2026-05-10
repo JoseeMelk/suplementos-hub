@@ -35,7 +35,7 @@
     @include('partials.nav-auth')
 
     <!-- HEADER CATÁLOGO -->
-    <div class="header-catalog">
+    {{-- <div class="header-catalog">
         <div class="container">
             <div class="header-catalog-content">
                 <!-- Avatar Provider -->
@@ -52,10 +52,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- MAIN CONTENT -->
-    <main class="container pb-2">
+    <main class="container pb-2 pt-4">
         @yield('content')
     </main>
 

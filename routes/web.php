@@ -8,6 +8,7 @@ use App\Http\Controllers\Provider\ProductController;
 use App\Http\Controllers\Provider\ProviderSlugController;
 use App\Http\Controllers\Provider\ProviderProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Public\CatalogController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -43,5 +44,7 @@ Route::prefix('provider/')
 //Rutas para admin y proveedor
 Route::get('categories/api', [CategoryController::class, 'api'])->middleware(['auth', 'role:admin|provider']);
 
-// Ruta pública para catálogo de proveedores
-Route::get('catalogo/{slug}', fn () => view('public.catalog'))->name('public.catalog');
+// Rutas públicas para catálogo de proveedores
+Route::get('catalogo/{slug}', [CatalogController::class, 'index'])->name('catalogo.index');
+Route::get('catalogo/{slug}/api', [CatalogController::class, 'api'])->name('catalogo.api');
+Route::get('catalogo/{slug}/productos/{product}', [CatalogController::class, 'show'])->name('catalogo.show');
