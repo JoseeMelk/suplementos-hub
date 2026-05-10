@@ -53,6 +53,7 @@
         {{-- =============================================
             FOTO DE PERFIL (FUTURO - COMENTADO)
             ============================================= --}}
+            <!--
             <div class="d-flex align-items-center gap-3 mb-4 pb-4" style="border-bottom: 1px solid #f0f0ee;">
 
                 <div class="position-relative">
@@ -94,17 +95,20 @@
                 </div>
 
             </div>
+            -->
 
             <div class="row g-3 g-md-4">
 
             {{-- =============================================
                     BOTÓN EDITAR (FUTURO - COMENTADO)
                 ============================================= --}}
+                <!--
                 <div class="col-12 d-flex justify-content-end mb-2">
                     <button class="btn btn-sm btn-outline-success" id="btnEditProfile">
                         <i class="bi-pencil me-1"></i>Editar perfil
                     </button>
                 </div>
+                -->
 
                 <div class="col-6 col-md-6">
                     <p class="profile-label">Nombre Completo</p>
@@ -224,7 +228,7 @@
                             <i class="bi-globe2 me-2 opacity-50" style="font-size: 12px;"></i>
                             <span>{{ url('/catalogo/' . auth()->user()->slug) }}</span>
                         </div>
-                        <button class="slug-copy-btn" id="btnCopyLink" title="Copiar enlace">
+                        <button class="slug-copy-btn" id="btnCopyLink" data-catalog-url="{{ url('/catalogo/' . auth()->user()->slug) }}" title="Copiar enlace">
                             <i class="bi-clipboard" id="copyIcon"></i>
                         </button>
                     </div>
@@ -428,139 +432,5 @@
 @endpush
 
 @push('scripts')
-    <script>
-        // =============================================
-        // SEGMENTED CONTROL MOBILE (manual, sin BS tab)
-        // =============================================
-        const segmentBtns = document.querySelectorAll('.segment-btn');
-        const tabPanes = document.querySelectorAll('#profileTabsContent .tab-pane');
-
-        function activateTab(targetId) {
-            // Paneles
-            tabPanes.forEach(pane => {
-                pane.classList.remove('show', 'active');
-            });
-            const targetPane = document.getElementById(targetId);
-            if (targetPane) {
-                targetPane.classList.add('show', 'active');
-            }
-
-            // Botones desktop (sincronizar)
-            document.querySelectorAll('#profileTabs .nav-link').forEach(link => {
-                const target = link.getAttribute('data-bs-target')?.replace('#', '');
-                link.classList.toggle('active', target === targetId);
-                link.setAttribute('aria-selected', target === targetId ? 'true' : 'false');
-            });
-        }
-
-        // Botones del segmented control mobile
-        segmentBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                segmentBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                activateTab(btn.dataset.target);
-            });
-        });
-
-        // Cuando el usuario usa los tabs desktop → sincronizar mobile
-        document.querySelectorAll('#profileTabs .nav-link').forEach(link => {
-            link.addEventListener('shown.bs.tab', e => {
-                const targetId = e.target.getAttribute('data-bs-target')?.replace('#', '');
-                segmentBtns.forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.target === targetId);
-                });
-            });
-        });
-
-        // =============================================
-        // COPIAR ENLACE
-        // =============================================
-        const btnCopy = document.getElementById('btnCopyLink');
-        if (btnCopy) {
-            btnCopy.addEventListener('click', async () => {
-                const url = '{{ url('/catalogo/' . (auth()->user()->slug ?? '')) }}';
-                try {
-                    await navigator.clipboard.writeText(url);
-                    const icon = document.getElementById('copyIcon');
-                    icon.className = 'bi-check2';
-                    btnCopy.style.background = '#085041';
-                    setTimeout(() => {
-                        icon.className = 'bi-clipboard';
-                        btnCopy.style.background = '';
-                    }, 2000);
-                } catch {
-                    alert('No se pudo copiar el enlace.');
-                }
-            });
-        }
-
-        // =============================================
-        // GENERAR SLUG
-        // =============================================
-        const btnGenerateSlug = document.getElementById('btnGenerateSlug');
-        if (btnGenerateSlug) {
-            btnGenerateSlug.addEventListener('click', async () => {
-                btnGenerateSlug.disabled = true;
-                btnGenerateSlug.innerHTML = '<i class="bi-hourglass-split me-2"></i>Generando...';
-                try {
-                    const response = await fetch('{{ route('slugs.store') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                        }
-                    });
-                    const data = await response.json();
-                    if (data.ok) {
-                        location.reload();
-                    } else {
-                        alert(data.message || 'Error al generar el catálogo');
-                        btnGenerateSlug.disabled = false;
-                        btnGenerateSlug.innerHTML = '<i class="bi-sparkles me-2"></i>Generar mi catálogo';
-                    }
-                } catch (error) {
-                    console.error(error);
-                    alert('Error al generar el catálogo');
-                    btnGenerateSlug.disabled = false;
-                    btnGenerateSlug.innerHTML = '<i class="bi-sparkles me-2"></i>Generar mi catálogo';
-                }
-            });
-        }
-
-        // =============================================
-        // REGENERAR SLUG
-        // =============================================
-        const btnRegenerate = document.getElementById('btnRegenerateSlug');
-        if (btnRegenerate) {
-            btnRegenerate.addEventListener('click', async () => {
-                if (!confirm('¿Regenerar el enlace? El enlace anterior dejará de funcionar.')) return;
-                btnRegenerate.disabled = true;
-                btnRegenerate.innerHTML = '<i class="bi-hourglass-split me-1"></i>Regenerando...';
-                try {
-                    const response = await fetch('{{ route('slugs.store') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                        }
-                    });
-                    const data = await response.json();
-                    if (data.ok) {
-                        location.reload();
-                    } else {
-                        alert(data.message || 'Error al regenerar');
-                        btnRegenerate.disabled = false;
-                        btnRegenerate.innerHTML = '<i class="bi-arrow-clockwise me-1"></i>Regenerar';
-                    }
-                } catch (error) {
-                    console.error(error);
-                    alert('Error al regenerar el catálogo');
-                    btnRegenerate.disabled = false;
-                    btnRegenerate.innerHTML = '<i class="bi-arrow-clockwise me-1"></i>Regenerar';
-                }
-            });
-        }
-    </script>
-
     @vite('resources/js/provider/profile/update.js')
 @endpush

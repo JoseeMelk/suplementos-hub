@@ -11,3 +11,7 @@ export const PRODUCT_ROUTES = {
 export const CATEGORY_ROUTES = {
     API: '/categories/api'
 }
+
+export const SLUG_ROUTES = {
+    STORE: '/provider/slugs'
+}
