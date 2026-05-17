@@ -23,42 +23,13 @@
 </head>
 <body>
 
-@include('partials.nav-admin')
+@include('partials.nav')
 
 <div class="container-fluid">
     <div class="row">
 
         <!-- SIDEBAR DESKTOP -->
-        <aside class="col-md-3 col-lg-2 d-none d-md-block">
-            <div class="bg-white border-end h-100">
-
-                <p class="sidebar-title pt-3">Gestión</p>
-
-                <a href="{{ route('users.index') }}" class="sidebar-link active">
-                    Proveedores
-                    {{-- <span class="badge bg-warning text-dark">3</span> --}}
-                </a>
-
-                {{-- <a href="#" class="sidebar-link">
-                    Productos
-                </a> --}}
-
-                {{-- <hr>
-
-                <p class="sidebar-title">Plataforma</p>
-
-                <a href="#" class="sidebar-link">
-                    Estadísticas
-                </a> --}}
-
-                <hr>
-
-                <button id="logout-btn-desktop-sidebar" class="sidebar-link w-100 text-start border-0 bg-transparent">
-                    Cerrar sesión
-                </button>
-
-            </div>
-        </aside>
+        @include('partials.sidebar')
 
         <!-- MAIN -->
         <main class="col-12 col-md-9 col-lg-10 p-4">
@@ -69,47 +40,12 @@
 </div>
 
 <!-- SIDEBAR MOBILE -->
-<div class="offcanvas offcanvas-start d-md-none me-4" tabindex="-1" id="sidebar">
-
-    <div class="offcanvas-header">
-        <h5>Menú</h5>
-        <button class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-
-    <div class="offcanvas-body p-0">
-
-        <p class="sidebar-title">Gestión</p>
-
-        <a href="#" class="sidebar-link active">
-            Proveedores
-            {{-- <span class="badge bg-warning text-dark">3</span> --}}
-        </a>
-
-        {{-- <a href="#" class="sidebar-link">
-            Productos
-        </a> --}}
-
-        {{-- <hr>
-
-        <p class="sidebar-title">Plataforma</p>
-
-        <a href="#" class="sidebar-link">
-            Estadísticas
-        </a> --}}
-
-        <hr>
-
-        <button id="logout-btn-mobile-sidebar" class="sidebar-link w-100 text-start border-0 bg-transparent">
-            Cerrar sesión
-        </button>
-
-    </div>
-
-</div>
+@include('partials.sidebar-mobile')
 
 @include('partials.js-config')
 
 @stack('scripts')
+@vite('resources/js/layout/sidebar.js')
 
 </body>
 </html>

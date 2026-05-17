@@ -3,14 +3,31 @@
 
         <p class="sidebar-title">Gestión</p>
 
-        <a href="{{ route('products.index') }}" class="sidebar-link" data-href="{{ route('products.index') }}">
-            Mis Productos
-            {{-- <span class="badge bg-warning text-dark">3</span> --}}
-        </a>
+        @if (Auth::user()->hasRole('admin'))
+            <a href="{{ route('dashboard') }}" class="sidebar-link active">
+                Dashboard
+                {{-- <span class="badge bg-warning text-dark">3</span> --}}
+            </a>
 
-        <a href="{{ route('profiles.index') }}" class="sidebar-link" data-href="{{ route('profiles.index') }}">
-            Mi Perfil
-        </a>
+            <a href="{{ route('users.index') }}" class="sidebar-link">
+                Proveedores
+                {{-- <span class="badge bg-warning text-dark">3</span> --}}
+            </a>
+        @else
+            <a href="{{ route('products.index') }}" class="sidebar-link" data-href="{{ route('products.index') }}">
+                Mis Productos
+                {{-- <span class="badge bg-warning text-dark">3</span> --}}
+            </a>
+
+            <hr>
+
+            <p class="sidebar-title">Perfil</p>
+
+            <a href="{{ route('profiles.index') }}" class="sidebar-link" data-href="{{ route('profiles.index') }}">
+                Mi Perfil
+            </a>
+        @endif
+
 
         {{-- <a href="#" class="sidebar-link">
                     Productos

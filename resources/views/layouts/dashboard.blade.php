@@ -42,9 +42,8 @@
                 <!-- Breadcrumb -->
                 <nav aria-label="breadcrumb" class="mb-3">
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item">Proveedor</li>
+                        <li class="breadcrumb-item">Dashboard</li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            @yield('breadcrumb', 'Mis Productos')
                         </li>
                     </ol>
                 </nav>
