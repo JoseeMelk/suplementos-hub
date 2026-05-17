@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (response.status === 200 && data.ok) {
-                // Login exitoso - redirigir al dashboard
-                window.location.href = '/';
+                // Login exitoso - redirigir al dashboard/página específica del rol
+                window.location.href = data.redirect || '/';
             } else if (response.status === 422) {
                 // Errores de validación
                 console.error('Errores de validación:', data.errors);

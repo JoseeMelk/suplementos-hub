@@ -9,11 +9,11 @@
 
         <p class="sidebar-title">Gestión</p>
 
-        @if (Auth::user()->hasRole('admin'))
-        <a href="{{ route('dashboard') }}" class="sidebar-link active">
+        <a href="{{ route('dashboard') }}" class="sidebar-link" data-href="{{ route('dashboard') }}">
             Dashboard
         </a>
-            <a href="{{ route('users.index') }}" class="sidebar-link">
+        @if (Auth::user()->hasRole('admin'))
+            <a href="{{ route('users.index') }}" class="sidebar-link" data-href="{{ route('users.index') }}">
             Proveedores
             {{-- <span class="badge bg-warning text-dark">3</span> --}}
         </a>

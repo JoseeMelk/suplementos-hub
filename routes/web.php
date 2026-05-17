@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Provider\ProductController;
 use App\Http\Controllers\Provider\ProviderSlugController;
@@ -19,10 +20,11 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 Route::middleware(['auth', 'ensure.approved'])->group(function () {
-    Route::get('/', fn () => view('eje'));
+    // Rutas específicas del proveedor aprobado aquí si es necesario
 });
 
 Route::prefix('admin/')

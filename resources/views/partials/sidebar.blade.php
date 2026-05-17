@@ -3,13 +3,12 @@
 
         <p class="sidebar-title">Gestión</p>
 
+        <a href="{{ route('dashboard') }}" class="sidebar-link" data-href="{{ route('dashboard') }}">
+            Dashboard
+            {{-- <span class="badge bg-warning text-dark">3</span> --}}
+        </a>
         @if (Auth::user()->hasRole('admin'))
-            <a href="{{ route('dashboard') }}" class="sidebar-link active">
-                Dashboard
-                {{-- <span class="badge bg-warning text-dark">3</span> --}}
-            </a>
-
-            <a href="{{ route('users.index') }}" class="sidebar-link">
+            <a href="{{ route('users.index') }}" class="sidebar-link" data-href="{{ route('users.index') }}">
                 Proveedores
                 {{-- <span class="badge bg-warning text-dark">3</span> --}}
             </a>
