@@ -1,0 +1,54 @@
+.font-dm-serif {
+    font-family: 'DM Serif Display', serif;
+}
+
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border: 1px solid #e0dfd8;
+    border-radius: 12px;
+    padding: 28px;
+}
+
+.auth-sub {
+    text-align: center;
+    font-size: 13px;
+    color: #6b6b67;
+    margin-bottom: 20px;
+}
+
+.btn-main {
+    background: #0F6E56;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.btn-main:hover {
+    background: #085041;
+    color: #fff;
+}
+
+.auth-nav {
+    background: #fff;
+    border-bottom: 1px solid #e0dfd8;
+    padding: 12px 0;
+}
+
+.auth-link {
+    font-size: 13px;
+    color: #6b6b67;
+    text-decoration: none;
+}
+
+.auth-link:hover {
+    color: #0F6E56;
+}

@@ -44,7 +44,8 @@ class LoginController extends Controller
 
             return response()->json([
                 'ok' => true,
-                'message' => 'Inicio de sesión exitoso'
+                'message' => 'Inicio de sesión exitoso',
+                'redirect' => '/'
             ]);
         }
 

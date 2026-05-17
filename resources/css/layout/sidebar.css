@@ -1,0 +1,29 @@
+.sidebar-link {
+    font-size: 14px;
+    color: #6c757d;
+    text-decoration: none;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-link:hover {
+    background: #f8f9fa;
+    color: #0F6E56;
+}
+
+.sidebar-link.active {
+    background: #E1F5EE;
+    color: #0F6E56;
+    font-weight: 500;
+    border-left-color: #0F6E56;
+}
+
+.sidebar-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #999;
+    padding: 0 16px;
+    margin-top: 16px;
+}
