@@ -218,5 +218,4 @@
 @push('scripts')
 @vite('resources/js/admin/user/index.js')
 @vite('resources/js/admin/user/approve-reject.js')
-@vite('resources/js/auth/logout.js')
 @endpush

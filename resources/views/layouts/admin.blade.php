@@ -45,6 +45,7 @@
 @include('partials.js-config')
 
 @stack('scripts')
+@vite('resources/js/auth/logout.js')
 @vite('resources/js/layout/sidebar.js')
 
 </body>

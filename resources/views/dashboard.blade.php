@@ -62,11 +62,11 @@
 
 </div>
 
-<div class="text-center mt-5">
+{{-- <div class="text-center mt-5">
     <button id="logout-btn" class="btn btn-outline-danger btn-sm">
         Cerrar sesión
     </button>
-</div>
+</div> --}}
 
 <style>
     .dashboard-card:hover {
