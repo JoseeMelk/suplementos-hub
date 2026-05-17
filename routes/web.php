@@ -3,13 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Provider\ProductController;
 use App\Http\Controllers\Provider\ProviderSlugController;
 use App\Http\Controllers\Provider\ProviderProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Public\CatalogController;
+use App\Http\Controllers\DashboardController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');

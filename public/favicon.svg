@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Fondo gris oscuro neutro -->
+  <rect width="200" height="200" fill="#1a1a1a"/>
+  
+  <!-- Cuadrado principal con color verde -->
+  <rect x="40" y="40" width="120" height="120" fill="none" stroke="#198754" stroke-width="4" rx="8"/>
+  
+  <!-- Cuatro círculos dentro en grid 2x2 -->
+  <!-- Círculo superior izquierdo (rojo - proteína) -->
+  <circle cx="70" cy="70" r="20" fill="#FF6B6B" opacity="0.9"/>
+  
+  <!-- Círculo superior derecho (naranja - creatina) -->
+  <circle cx="130" cy="70" r="20" fill="#FFA500" opacity="0.9"/>
+  
+  <!-- Círculo inferior izquierdo (azul - pre-entreno) -->
+  <circle cx="70" cy="130" r="20" fill="#4A90E2" opacity="0.9"/>
+  
+  <!-- Círculo inferior derecho (púrpura - otros) -->
+  <circle cx="130" cy="130" r="20" fill="#9B59B6" opacity="0.9"/>
+  
+  <!-- Nombre de la empresa y sistema -->
+  <text x="100" y="175" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#198754" text-anchor="middle">VORENYA</text>
+  <text x="100" y="190" font-family="Arial, sans-serif" font-size="8" fill="#999999" text-anchor="middle">SUPPLEMENTS HUB</text>
+</svg>
