@@ -34,7 +34,6 @@ async function approveUser(userId) {
 }
 
 async function rejectUser(userId) {
-    console.log(userId);
     const result = await alert.confirm(
         '¿Estás seguro de que deseas rechazar este proveedor?',
         'El proveedor será rechazado y no podrá operar en la plataforma.',

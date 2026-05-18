@@ -80,29 +80,3 @@
 </style>
 
 @endsection
-
-@push('scripts')
-<script>
-document.getElementById('logout-btn').addEventListener('click', async () => {
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    
-    try {
-        const response = await fetch('/logout', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': csrfToken,
-                'Accept': 'application/json',
-            },
-        });
-
-        const data = await response.json();
-        if (data.ok) {
-            window.location.href = '/login';
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        window.location.href = '/login';
-    }
-});
-</script>
-@endpush
