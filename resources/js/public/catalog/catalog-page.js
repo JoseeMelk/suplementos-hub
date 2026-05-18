@@ -8,29 +8,20 @@ let slug = document.getElementById('productGrid')?.dataset.slug ||
 let currentPage = 1;
 const perPage = 12;
 
-console.log('Slug del catálogo:', slug);
-
 async function loadProducts(page = 1) {
     try {
         const url = `/catalogo/${slug}/api?page=${page}&per_page=${perPage}`;
-        console.log('Cargando desde:', url);
         const response = await fetch(url);
         const data = await response.json();
 
-        console.log('Respuesta de API:', data);
-
         if (!data.ok) {
-            console.log('API retornó ok: false');
             showEmptyState();
             return;
         }
-
-        console.log('Productos recibidos:', data.data);
         renderProducts(data.data || []);
         renderPagination(data.meta);
         
     } catch (error) {
-        console.error('Error cargando productos:', error);
         showEmptyState();
     }
 }
@@ -146,12 +137,9 @@ function showEmptyState() {
 async function loadProductDetailsFromAPI(productId) {
     try {
         const url = `/catalogo/${slug}/productos/${productId}`;
-        console.log('Obteniendo detalles desde:', url);
         
         const response = await fetch(url);
         const data = await response.json();
-
-        console.log('Detalles obtenidos:', data);
 
         if (!data.ok) {
             alert('Producto no encontrado');

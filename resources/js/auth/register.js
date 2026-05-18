@@ -2,9 +2,6 @@ import { BASE_URL } from '../config';
 
 const REGISTER_URL = `${BASE_URL}/register`;
 
-console.log(REGISTER_URL);
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('registerForm');
 
