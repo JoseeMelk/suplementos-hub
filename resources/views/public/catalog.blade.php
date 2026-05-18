@@ -9,6 +9,8 @@
         <p class="text-muted small">Catálogo de productos disponibles</p>
     </div>
 
+    @include('partials.ads.banner')
+    
     <!-- GRID PRODUCTOS -->
     <div class="row g-4 mb-4" id="productGrid" data-slug="{{ $slug }}">
         <!-- Los productos se cargarán aquí dinámicamente -->

@@ -61,6 +61,10 @@
         @yield('content')
     </main>
 
+    <div class="me-md-5 ms-md-5">
+        @include('partials.ads.provider-card')
+    </div>
+
     @include('partials.footer')
 
     @stack('scripts')
