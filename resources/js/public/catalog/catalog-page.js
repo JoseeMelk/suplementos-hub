@@ -160,21 +160,26 @@ function showProductDetails(product) {
     const category = product.category || 'Sin categoría';
     const description = product.description || 'Sin descripción disponible';
     const price = parseFloat(product.price).toFixed(2);
-    
-    document.getElementById('productDetailTitle').textContent = product.name;
+
     document.getElementById('productDetailName').textContent = product.name;
     document.getElementById('productDetailPrice').textContent = `$${price}`;
-    document.getElementById('productDetailCategory').textContent = `Categoría: ${category}`;
+    document.getElementById('productDetailCategory').textContent = category;
     document.getElementById('productDetailDescription').textContent = description;
-    
-    const imgElement = document.getElementById('productDetailImage');
+
+    // Imagen o fallback
+    const imgWrapper = document.getElementById('productDetailImageWrapper');
+    const noImage   = document.getElementById('productDetailNoImage');
+    const imgEl     = document.getElementById('productDetailImage');
+
     if (imageUrl) {
-        imgElement.src = imageUrl;
-        imgElement.style.display = 'block';
+        imgEl.src = imageUrl;
+        imgWrapper.classList.remove('d-none');
+        noImage.classList.add('d-none');
     } else {
-        imgElement.style.display = 'none';
+        imgWrapper.classList.add('d-none');
+        noImage.classList.remove('d-none');
     }
-    
+
     const modal = new bootstrap.Modal(document.getElementById('productDetailModal'));
     modal.show();
 }
