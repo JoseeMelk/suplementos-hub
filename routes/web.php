@@ -50,3 +50,8 @@ Route::get('categories/api', [CategoryController::class, 'api'])->middleware(['a
 Route::get('catalogo/{slug}', [CatalogController::class, 'index'])->name('catalogo.index');
 Route::get('catalogo/{slug}/api', [CatalogController::class, 'api'])->name('catalogo.api');
 Route::get('catalogo/{slug}/productos/{product}', [CatalogController::class, 'show'])->name('catalogo.show');
+
+//Ruta publica sobre nosotros
+Route::get('/', function () {
+    return view('public.index');
+});
