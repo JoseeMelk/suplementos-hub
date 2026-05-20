@@ -16,10 +16,20 @@
     @vite('resources/css/public/catalog.css')
 
     <style>
-        body {
+        html, body {
+            height: 100%;
             font-family: 'DM Sans', sans-serif;
             background: #f7f7f5;
             color: #1a1a18;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
         }
 
         .pagination .page-item.active .page-link {
