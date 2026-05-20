@@ -102,6 +102,8 @@
         </div>
     </div>
 
+    @include('partials.ads.provider-card')
+
     <!-- GRID PRODUCTOS -->
     <div class="row g-4" id="productList">
     </div>

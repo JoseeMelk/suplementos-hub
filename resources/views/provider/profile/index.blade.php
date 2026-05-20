@@ -251,6 +251,8 @@
 
     </div>
 
+    @include('partials.ads.provider-card')
+
 @endsection
 
 @push('styles')

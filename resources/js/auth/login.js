@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.status === 200 && data.ok) {
                 // Login exitoso - redirigir al dashboard/página específica del rol
-                window.location.href = data.redirect || '/';
+                window.location.href = data.redirect || '/dashboard';
             } else if (response.status === 422) {
                 // Errores de validación
                 console.error('Errores de validación:', data.errors);

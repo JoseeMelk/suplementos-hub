@@ -12,6 +12,18 @@
     Regístrate como proveedor
 </p>
 
+<!-- Alerta de datos reales -->
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <small class="d-block mb-2">
+        <strong>⚠️ Datos reales:</strong> Por favor, completa este formulario con información real. 
+        Estos datos no podrán ser modificados posteriormente.
+    </small>
+    <small>
+        <strong>📌 Nota importante:</strong> Tu nombre de usuario será visible cuando compartas tu catálogo digital.
+    </small>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <form id="registerForm">
 
     <!-- NAME -->
