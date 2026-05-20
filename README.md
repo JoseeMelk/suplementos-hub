@@ -1,58 +1,103 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Suplementos Hub
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplicación web monolítica desarrollada con **Laravel 12** para la gestión de catálogo de suplementos, con control de acceso por roles/permisos, administración de productos y categorías, y gestión de imágenes.
 
-## About Laravel
+## Descripción
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Suplementos Hub centraliza la operación de un catálogo de suplementos para distintos perfiles de usuario (administración y proveedores).
+El sistema implementa autenticación, autorización basada en RBAC y un modelo de dominio orientado a:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Categorías
+- Productos
+- Imágenes de producto
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+La solución está diseñada para ser escalable, mantenible y fácil de desplegar en entornos Linux.
 
-## Learning Laravel
+## Características principales
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Autenticación de usuarios
+- Autorización por roles y permisos (RBAC)
+- CRUD de categorías
+- CRUD de productos
+- Asociación y gestión de imágenes de producto
+- Paneles diferenciados por perfil de usuario
+- Migraciones y seeders para versionado de datos
+- Pipeline de assets con Vite
+- Base de pruebas con Pest/PHPUnit
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Stack tecnológico
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- **Backend:** PHP 8+ / Laravel 12
+- **Frontend:** Blade, JavaScript, CSS, Vite
+- **ORM:** Eloquent
+- **Autorización:** spatie/laravel-permission
+- **Testing:** Pest + PHPUnit
+- **Base de datos:** MySQL/MariaDB (u otro motor soportado por Laravel)
 
-## Agentic Development
+## Arquitectura
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+- Patrón **MVC** con separación de responsabilidades
+- Capa de servicios para lógica transversal (ej. procesamiento de imágenes)
+- Persistencia relacional con migraciones versionadas
+- Configuración desacoplada por entorno mediante variables de entorno
+- Renderizado server-side con Blade
+
+## Requisitos
+
+- PHP 8+
+- Composer
+- Node.js + npm
+- Base de datos relacional (MySQL/MariaDB)
+- Extensiones PHP requeridas por Laravel
+
+## Instalación y ejecución local
 
 ```bash
-composer require laravel/boost --dev
+git clone <URL_DEL_REPO>
+cd suplementos-hub
 
-php artisan boost:install
+cp .env.example .env
+composer install
+npm install
+
+php artisan key:generate
+php artisan migrate --seed
+
+npm run dev
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Scripts útiles
 
-## Contributing
+```bash
+# Ejecutar pruebas
+php artisan test
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Compilar assets para producción
+npm run build
 
-## Code of Conduct
+# Limpiar/optimizar cachés
+php artisan optimize:clear
+php artisan optimize
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Despliegue (resumen)
 
-## Security Vulnerabilities
+1. Configurar `.env` de producción.
+2. Instalar dependencias con optimización.
+3. Ejecutar migraciones.
+4. Compilar assets (`npm run build`).
+5. Configurar permisos de escritura en storage/cache.
+6. Publicar con Nginx/Apache + PHP-FPM.
+7. Activar cachés de configuración/rutas/eventos.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Calidad y mantenimiento
 
-## License
+- Migraciones incrementales y reversibles
+- Seeders para datos base
+- Pruebas automatizadas para regresión
+- Gestión centralizada de permisos para auditoría de acceso
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Licencia
+
+Este proyecto se distribuye bajo la licencia que defina el repositorio.
