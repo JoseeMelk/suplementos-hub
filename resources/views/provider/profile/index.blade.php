@@ -114,11 +114,11 @@
                     <p class="profile-label">Nombre Completo</p>
                     {{-- MODO LECTURA --}}
                     <p class="profile-value" id="displayName">
-                        {{ auth()->user()->display_name ?? auth()->user()->name }}
+                        {{ auth()->user()->name }}
                     </p>
                     {{-- MODO EDICIÓN (FUTURO - COMENTADO) --}}
                     <input type="text" class="form-control form-control-sm d-none" id="inputName"
-                        value="{{ auth()->user()->display_name ?? auth()->user()->name }}">
+                        value="{{ auth()->user()->name }}">
 
                 </div>
 

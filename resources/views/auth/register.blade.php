@@ -52,7 +52,7 @@
     <!-- CONFIRM -->
     <div class="mb-4">
         <label class="form-label small">Confirmar contraseña</label>
-        <input type="password" name="password_confirmation" class="form-control form-control-sm" placeholder="Repite tu contraseña" required>
+        <input type="password" name="password_confirmation" class="form-control form-control-sm" placeholder="Mínimo 8 caracteres" required>
     </div>
 
     <button type="submit" class="btn btn-main w-100">
