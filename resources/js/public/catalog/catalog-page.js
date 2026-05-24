@@ -44,7 +44,7 @@ function renderProducts(products) {
         const price = parseFloat(product.price).toFixed(2);
         
         const imageHtml = imageUrl 
-            ? `<img src="${imageUrl}" class="card-img-top" alt="${product.name}" style="height: 200px; object-fit: cover;">`
+            ? `<img src="${imageUrl}" class="card-img-top" alt="${product.name}">`
             : `<div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px; background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);"><i class="bi-image" style="font-size: 3rem; color: #ccc;"></i></div>`;
         
         return `
