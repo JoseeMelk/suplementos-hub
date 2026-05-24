@@ -50,7 +50,7 @@ function renderProducts(products) {
         return `
             <div class="col-6 col-md-4 col-lg-3">
                 <div class="card h-100 border-0 shadow-sm product-card">
-                    <div class="position-relative">
+                    <div class="position-relative p-2">
                         ${imageHtml}
 
                         <span class="badge bg-success position-absolute top-0 end-0 m-2">
