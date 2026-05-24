@@ -37,7 +37,7 @@ class StoreProductRequest extends FormRequest
 
             // Imagen — una de las dos opciones es requerida
             //'image_url'   => ['nullable', 'url'],
-            'image'       => ['required', 'file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'image'       => ['required', 'file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:1024'],
         ];
     }
 
@@ -52,7 +52,7 @@ class StoreProductRequest extends FormRequest
             'price.min'          => 'El precio no puede ser negativo.',
             'weight_grams.integer'=> 'El peso debe ser un número entero.',
             'image.image'        => 'El archivo debe ser una imagen.',
-            'image.max'          => 'La imagen no puede superar 5MB.',
+            'image.max'          => 'La imagen no puede superar 1MB.',
             //'image_url.url'      => 'La URL de imagen no es válida.',
         ];
     }

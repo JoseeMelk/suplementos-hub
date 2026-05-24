@@ -4,7 +4,7 @@ export function createProductCard(product) {
 
     col.innerHTML = `
         <div class="card h-100 border-0 shadow-sm product-card">
-            <div class="position-relative">
+            <div class="position-relative p-1">
                 <img src="${product.image_url ?? 'https://via.placeholder.com/300x200'}" 
                      class="card-img-top"
                      alt="${product.name}">

@@ -13,9 +13,9 @@ use Intervention\Image\FileExtension;
 
 class ImageService
 {
-    const WIDTH   = 800;
-    const HEIGHT  = 800;
-    const QUALITY = 85;
+    const WIDTH   = 900;
+    const HEIGHT  = 1150;
+    const QUALITY = 95;
     const DISK    = 'public';
     const FOLDER  = 'products';
 
@@ -59,18 +59,50 @@ class ImageService
     {
         $filename = self::FOLDER . '/' . Str::uuid() . '.webp';
 
-        // 1. Redimensionar
-        $image->cover(self::WIDTH, self::HEIGHT);
+        // 1. Escalar sin recortar (mantiene proporciones)
+        $image->scaleDown(
+            width: self::WIDTH,
+            height: self::HEIGHT
+        );
 
-        // 2. Codificar (Basado en el link que pasaste)
-        $encoded = $image->encodeUsingFileExtension(FileExtension::WEBP, quality: self::QUALITY);
+        // Obtener las dimensiones actuales de la imagen ya escalada
+        $currentWidth = $image->width();
+        $currentHeight = $image->height();
 
-        // 3. Guardar en Storage
-        // IMPORTANTE: En v4 debes usar ->toString() para obtener el contenido binario
-        Storage::disk(self::DISK)->put($filename, $encoded->toString());
+        // 2. Determinar el tamaño del canvas dinámicamente
+        // Si es menor a 800x800, el canvas se ajusta exactamente a la imagen (cero espacio blanco)
+        if ($currentWidth < 800 || $currentHeight < 800) {
+            $canvasWidth = $currentWidth;
+            $canvasHeight = $currentHeight;
+        } else {
+            // Si es grande, mantiene tus dimensiones máximas estándar (900x1200)
+            $canvasWidth = self::WIDTH;
+            $canvasHeight = self::HEIGHT;
+        }
+
+        // 3. Agregar canvas/fondo con las medidas calculadas
+        $image->resizeCanvas(
+            $canvasWidth,
+            $canvasHeight,
+            '#ffffff',
+            'center'
+        );
+
+        // 4. Codificar
+        $encoded = $image->encodeUsingFileExtension(
+            FileExtension::WEBP,
+            quality: self::QUALITY
+        );
+
+        // 5. Guardar
+        Storage::disk(self::DISK)->put(
+            $filename,
+            $encoded->toString()
+        );
 
         return $filename;
     }
+
 
     public function delete(string $path): void
     {
