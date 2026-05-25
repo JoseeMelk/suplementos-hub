@@ -26,7 +26,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:150'],
-            'description' => ['nullable', 'string', 'max:1000'],
+            'description' => ['nullable', 'string', 'max:700'],
             'category_id' => ['required', 'exists:categories,id'],
             'brand'       => ['nullable', 'string', 'max:100'],
             'price'       => ['nullable', 'numeric', 'min:0'],
@@ -46,6 +46,7 @@ class StoreProductRequest extends FormRequest
         return [
             'name.required'      => 'El nombre del producto es obligatorio.',
             'name.max'           => 'El nombre no puede superar 150 caracteres.',
+            'description.max'    => 'La descripción es muy larga, no puede superar 700 caracteres.',
             'category_id.required' => 'Selecciona una categoría.',
             'category_id.exists'   => 'La categoría seleccionada no existe.',
             'price.numeric'      => 'El precio debe ser un número.',

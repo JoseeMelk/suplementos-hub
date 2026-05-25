@@ -28,9 +28,9 @@ class UpdateProductRequest extends FormRequest
             'name' => 'nullable|max:150',
             'category_id' => 'nullable|exists:categories,id',
             'price' => 'nullable|numeric|min:0',
-            'description' => 'nullable|max:255',
+            'description' => 'nullable|max:700',
             'is_visible' => 'nullable|boolean',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:1024',
         ];
     }
 
@@ -42,9 +42,10 @@ class UpdateProductRequest extends FormRequest
             'category_id.exists'   => 'La categoría seleccionada no existe.',
             'price.numeric'      => 'El precio debe ser un número.',
             'price.min'          => 'El precio no puede ser negativo.',
+            'description.max'    => 'La descripción es muy larga, no puede superar 700 caracteres.',
             'image.image'        => 'El archivo debe ser una imagen.',
             'image.mimes'        => 'El archivo debe ser una imagen válida.',
-            'image.max'          => 'La imagen no puede superar 2MB.',
+            'image.max'          => 'La imagen no puede superar 1MB.',
         ];
     }
 
