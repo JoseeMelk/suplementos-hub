@@ -26,8 +26,10 @@ class RegisterController extends Controller
             DB::beginTransaction();
             $user = User::create($data);
             $user -> assignRole('provider');
-            // Enviar correo de bienvenida pendiente
-            $mailService->sendWelcomePending($user);
+            // Enviar correo de bienvenida pendiente solo después de confirmar la transacción
+            DB::afterCommit(function () use ($mailService, $user) {
+                $mailService->sendWelcomePending($user);
+            });
             DB::commit();
             $response = ['ok' => true, 'message' => 'Registro exitoso. Tu cuenta está pendiente de aprobación.'];
             $statusCode = 201;

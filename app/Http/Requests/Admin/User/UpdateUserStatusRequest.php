@@ -44,12 +44,15 @@ class UpdateUserStatusRequest extends FormRequest
         ];
     }
 
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'status' => $this->status ?? 'rejected',
-        ]);
-    }
+    /**
+     * Para no forzar rejected si status viene null comento esta parte del codigo
+     */
+    // protected function prepareForValidation(): void
+    // {
+    //     $this->merge([
+    //         'status' => $this->status ?? 'rejected',
+    //     ]);
+    // }
 
     protected function failedValidation(Validator $validator)
     {

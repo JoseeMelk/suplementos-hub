@@ -118,9 +118,13 @@ class UserController extends Controller
             $user->refresh();
 
             if ($user->isApproved()) {
-                $mailService->sendAccountApproved($user);
+                DB::afterCommit(function () use ($mailService, $user) {
+                    $mailService->sendAccountApproved($user);
+                });
             } elseif ($user->isRejected()) {
-                $mailService->sendAccountRejected($user);
+                DB::afterCommit(function () use ($mailService, $user) {
+                    $mailService->sendAccountRejected($user);
+                });
             }
             DB::commit();
 
