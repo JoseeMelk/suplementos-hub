@@ -50,4 +50,20 @@ class User extends Authenticatable
     {
         return $query->where('status', 'rejected');
     }
+
+    // Métodos para verificar el estado del usuario
+    public function isApproved(): bool
+    {
+        return $this->status === 'approved';
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->status === 'rejected';
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === 'pending';
+    }
 }
