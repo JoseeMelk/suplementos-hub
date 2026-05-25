@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Admin\User\UserApiRequest;
 use App\Http\Requests\Admin\User\UpdateUserStatusRequest;
 use App\Models\User;
+use App\Services\MailService;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -105,17 +107,27 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserStatusRequest $request, User $user)
+    public function update(UpdateUserStatusRequest $request, User $user, MailService $mailService)
     {
         $response = ['ok' => false, 'message' => 'Error al actualizar el estado del usuario'];
         $statusCode = 500;
 
         try {
+            DB::beginTransaction();
             $user->update($request->validated());
+            $user->refresh();
+
+            if ($user->isApproved()) {
+                $mailService->sendAccountApproved($user);
+            } elseif ($user->isRejected()) {
+                $mailService->sendAccountRejected($user);
+            }
+            DB::commit();
 
             $response = ['ok' => true, 'message' => 'Estado del usuario actualizado correctamente'];
             $statusCode = 200;
         } catch (\Exception $e) {
+            DB::rollBack();
             Log::error('Error en UserController@update: ' . $e->getMessage());
         }
 
