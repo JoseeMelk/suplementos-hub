@@ -24,7 +24,7 @@ export function createProductCard(product) {
                 </span>
 
                 <p class="text-muted small mb-3">
-                    ${truncateText(product.description ?? '')}
+                    ${truncateText(product.description ?? '', 90, 120)}
                 </p>
 
                 <div class="mt-auto d-flex flex-column flex-md-row gap-2">
