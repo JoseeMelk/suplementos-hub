@@ -85,7 +85,7 @@
 
                     <hr class="text-secondary opacity-25 my-3">
 
-                    <p id="productDetailDescription" class="text-muted mb-0 lh-lg">
+                    <p id="productDetailDescription" class="text-muted mb-0 lh-lg text-break">
                     </p>
 
                 </div>

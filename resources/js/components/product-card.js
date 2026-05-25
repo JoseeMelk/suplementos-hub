@@ -1,3 +1,5 @@
+import { truncateText } from "../utils/text-truncate";
+
 export function createProductCard(product) {
     const col = document.createElement('div');
     col.className = 'col-6 col-md-4 col-lg-3';
@@ -22,7 +24,7 @@ export function createProductCard(product) {
                 </span>
 
                 <p class="text-muted small mb-3">
-                    ${product.description ?? ''}
+                    ${truncateText(product.description ?? '')}
                 </p>
 
                 <div class="mt-auto d-flex flex-column flex-md-row gap-2">

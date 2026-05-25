@@ -1,5 +1,6 @@
 import { renderPaginate } from '../../components/paginate';
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { truncateText } from '../../utils/text-truncate';
 
 // Obtener slug del data attribute o del URL
 let slug = document.getElementById('productGrid')?.dataset.slug || 
@@ -69,7 +70,7 @@ function renderProducts(products) {
                         </span>
 
                         <p class="text-muted small mb-3">
-                            ${description}
+                            ${truncateText(description)}
                         </p>
 
                         <div class="mt-auto">
