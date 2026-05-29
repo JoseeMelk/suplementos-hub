@@ -23,6 +23,7 @@ class ProductResource extends JsonResource
             'category_id' => $this->when(!$this->relationLoaded('category'), $this->category_id),
             //Muestra el nombre de la categoria cuando se carga la relacion
             'category' => $this->when($this->relationLoaded('category'), $this->category->name),
+            'quantity' => $this->quantity,
             'is_visible' => $this->is_visible,
             'image_url' => $this->url_main_image,
         ];

@@ -73,7 +73,12 @@ function renderProducts(products) {
                             ${truncateText(description)}
                         </p>
 
-                        <div class="mt-auto">
+                        <div class="mt-auto pt-3 border-top">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted small">Disponibles:</span>
+                                <span class="fw-semibold text-primary">${product.quantity ?? 0}</span>
+                            </div>
+
                             <button class="btn btn-sm btn-outline-primary w-100 btn-details" 
                                     data-product-id="${product.id}">
                                 Detalles
@@ -161,10 +166,12 @@ function showProductDetails(product) {
     const category = product.category || 'Sin categoría';
     const description = product.description || 'Sin descripción disponible';
     const price = parseFloat(product.price).toFixed(2);
+    const quantity = product.quantity ?? 1;
 
     document.getElementById('productDetailName').textContent = product.name;
     document.getElementById('productDetailPrice').textContent = `$${price}`;
     document.getElementById('productDetailCategory').textContent = category;
+    document.getElementById('productDetailQuantity').textContent = quantity;
     document.getElementById('productDetailDescription').textContent = description;
 
     // Imagen o fallback

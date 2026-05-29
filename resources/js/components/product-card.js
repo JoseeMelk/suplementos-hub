@@ -27,7 +27,13 @@ export function createProductCard(product) {
                     ${truncateText(product.description ?? '', 90, 120)}
                 </p>
 
-                <div class="mt-auto d-flex flex-column flex-md-row gap-2">
+                <div class="mt-auto pt-3 border-top">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted small">Disponibles:</span>
+                        <span class="fw-semibold text-primary">${product.quantity ?? 0}</span>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row gap-2">
                     <button class="btn btn-sm btn-outline-primary w-100 btn-edit" data-id="${product.id}">
                         Editar
                     </button>

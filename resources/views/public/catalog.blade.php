@@ -83,6 +83,11 @@
 
                     <p id="productDetailPrice" class="fw-bold mb-3 text-success fs-4"></p>
 
+                    <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+                        <span class="text-muted small">Cantidad disponible:</span>
+                        <span id="productDetailQuantity" class="fw-semibold text-primary">0</span>
+                    </div>
+
                     <hr class="text-secondary opacity-25 my-3">
 
                     <p id="productDetailDescription" class="text-muted mb-0 lh-lg text-break">

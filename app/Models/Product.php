@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
     'flavor',
     'weight_grams',
     'serving_size',
+    'quantity',
     'is_visible',
     'user_id',
     'category_id'

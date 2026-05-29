@@ -29,6 +29,7 @@ class UpdateProductRequest extends FormRequest
             'category_id' => 'nullable|exists:categories,id',
             'price' => 'nullable|numeric|min:0',
             'description' => 'nullable|max:700',
+            'quantity' => 'required|integer|min:1',
             'is_visible' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:1024',
         ];
@@ -43,6 +44,9 @@ class UpdateProductRequest extends FormRequest
             'price.numeric'      => 'El precio debe ser un número.',
             'price.min'          => 'El precio no puede ser negativo.',
             'description.max'    => 'La descripción es muy larga, no puede superar 700 caracteres.',
+            'quantity.required'  => 'La cantidad es obligatoria.',
+            'quantity.integer'   => 'La cantidad debe ser un número entero.',
+            'quantity.min'       => 'La cantidad no puede ser negativa.',
             'image.image'        => 'El archivo debe ser una imagen.',
             'image.mimes'        => 'El archivo debe ser una imagen válida.',
             'image.max'          => 'La imagen no puede superar 1MB.',
@@ -56,6 +60,7 @@ class UpdateProductRequest extends FormRequest
             'description' => 'descripción',
             'category_id' => 'categoría',
             'price' => 'precio',
+            'quantity' => 'cantidad disponible',
             'is_visible' => 'es visible',
             'image' => 'imagen',
         ];

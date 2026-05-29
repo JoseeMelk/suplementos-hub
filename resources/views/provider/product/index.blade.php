@@ -114,7 +114,7 @@
 
         <!-- Info -->
         <p class="text-muted small mb-0">
-            Mostrando <span id="paginationFrom">1</span>–<span id="paginationTo">6</span>
+            Mostrando <span id="paginationFrom">0</span>–<span id="paginationTo">0</span>
             de <span id="paginationTotal">0</span> productos
         </p>
 
@@ -202,15 +202,29 @@
                             </div>
 
                             <!-- Categoría -->
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label">Categoría</label>
                                 <select name="category_id" class="form-control" id="categoryProductCreate" required>
                                     <option value="">Seleccionar categoría</option>
                                 </select>
                             </div>
 
+                            <!-- Cantidad disponible -->
+                            <div class="col-md-2">
+                                <label class="form-label">Cantidad</label>
+                                <div data-quantity-spinner class="input-group" style="max-width: 120px;">
+                                    <button class="btn btn-outline-primary btn-sm" type="button" data-quantity-minus>
+                                        <i class="bi-dash"></i>
+                                    </button>
+                                    <input type="number" name="quantity" class="form-control form-control-sm text-center quantity-input" value="1" min="1" required>
+                                    <button class="btn btn-outline-primary btn-sm" type="button" data-quantity-plus>
+                                        <i class="bi-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
                             <!-- Visible -->
-                            <div class="col-md-6 d-flex align-items-center">
+                            <div class="col-md-4 d-flex align-items-center">
                                 <div class="form-check form-switch mt-3">
                                     <!-- Si NO se marca, se envía el "0" -->
                                     <input type="hidden" name="is_visible" value="0">
@@ -289,14 +303,28 @@
                             </div>
 
                             <!-- Categoría -->
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label">Categoría</label>
                                 <select name="category_id" id="editCategory" class="form-control" required>
                                 </select>
                             </div>
 
+                            <!-- Cantidad -->
+                            <div class="col-md-2">
+                                <label class="form-label">Cantidad</label>
+                                <div data-quantity-spinner class="input-group" style="max-width: 120px;">
+                                    <button class="btn btn-outline-primary btn-sm" type="button" data-quantity-minus>
+                                        <i class="bi-dash"></i>
+                                    </button>
+                                    <input type="number" name="quantity" id="editQuantity" class="form-control form-control-sm text-center quantity-input" value="1" min="1" required>
+                                    <button class="btn btn-outline-primary btn-sm" type="button" data-quantity-plus>
+                                        <i class="bi-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
                             <!-- Visible -->
-                            <div class="col-md-6 d-flex align-items-center">
+                            <div class="col-md-4 d-flex align-items-center">
                                 <div class="form-check form-switch mt-3">
                                     <input type="hidden" name="is_visible" value="0">
                                     <input class="form-check-input" type="checkbox" id="editVisible" name="is_visible"
@@ -390,6 +418,17 @@
 
         .font-dm-serif {
             font-family: 'DM Serif Display', serif;
+        }
+
+        /* Quitar spinners nativos del input number */
+        .quantity-input::-webkit-outer-spin-button,
+        .quantity-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .quantity-input[type=number] {
+            -moz-appearance: textfield;
         }
     </style>
 @endpush

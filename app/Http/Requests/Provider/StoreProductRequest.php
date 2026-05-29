@@ -33,6 +33,7 @@ class StoreProductRequest extends FormRequest
             'weight_grams' => ['nullable', 'integer', 'min:1'],
             'flavor'      => ['nullable', 'string', 'max:100'],
             'serving_size' => ['nullable', 'string', 'max:50'],
+            'quantity'    => ['required', 'integer', 'min:1'],
             'is_visible'  => ['boolean'],
 
             // Imagen — una de las dos opciones es requerida
@@ -52,6 +53,9 @@ class StoreProductRequest extends FormRequest
             'price.numeric'      => 'El precio debe ser un número.',
             'price.min'          => 'El precio no puede ser negativo.',
             'weight_grams.integer'=> 'El peso debe ser un número entero.',
+            'quantity.required'  => 'La cantidad es obligatoria.',
+            'quantity.integer'   => 'La cantidad debe ser un número entero.',
+            'quantity.min'       => 'La cantidad no puede ser negativa.',
             'image.image'        => 'El archivo debe ser una imagen.',
             'image.max'          => 'La imagen no puede superar 1MB.',
             //'image_url.url'      => 'La URL de imagen no es válida.',
@@ -69,6 +73,7 @@ class StoreProductRequest extends FormRequest
             'weight_grams' => 'peso (gramos)',
             'flavor' => 'sabor',
             'serving_size' => 'tamaño de la ración',
+            'quantity' => 'cantidad disponible',
             'is_visible' => 'es visible',
             'image' => 'imagen',
         ];

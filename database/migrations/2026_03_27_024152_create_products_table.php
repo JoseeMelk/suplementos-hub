@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('flavor')->nullable();
             $table->integer('weight_grams')->nullable();
             $table->string('serving_size')->nullable();
+            $table->integer('quantity')->default(1);
             $table->boolean('is_visible')->default(true);
 
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');

@@ -4,6 +4,7 @@ import { openCreateModal, createProductHandler, openEditModal, editProductHandle
 import { renderProductList } from "../handlers/render-product.handler";
 import { renderFilter, getFilters, validateSearchInput, resetFilters } from '../handlers/filter-actions.handler';
 import { resetPagination } from '../handlers/pagination-actions.handler';
+import { initQuantitySpinners } from '../../../components/quantity-spinner';
 
 export async function initProductPage() {
     await renderProductList(); //Renderizar productos
@@ -43,6 +44,7 @@ export async function initProductPage() {
 
         btnOpenCreate.addEventListener('click', async () => {
             await openCreateModal();
+            initQuantitySpinners('#createProductForm');
         });
 
         btnCloseCreate?.addEventListener('click', () => {
@@ -77,6 +79,7 @@ export async function initProductPage() {
         const editBtn = e.target.closest('.btn-edit');
         if (editBtn) {
             await openEditModal(editBtn.dataset.id);
+            initQuantitySpinners('#editProductForm');
         }
 
         const deleteBtn = e.target.closest('.btn-delete');
