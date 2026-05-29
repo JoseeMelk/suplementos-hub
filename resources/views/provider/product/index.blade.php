@@ -195,7 +195,9 @@
                                     <button class="btn btn-outline-primary btn-sm" type="button" data-price-minus>
                                         <i class="bi-dash"></i>
                                     </button>
-                                    <input type="number" name="price" class="form-control form-control-sm text-center price-input" step="0.01" placeholder="0.00" value="0.00" required>
+                                    <input type="number" name="price"
+                                        class="form-control form-control-sm text-center price-input" step="0.01"
+                                        placeholder="0.00" value="0.00" required>
                                     <button class="btn btn-outline-primary btn-sm" type="button" data-price-plus>
                                         <i class="bi-plus"></i>
                                     </button>
@@ -209,7 +211,9 @@
                                     <button class="btn btn-outline-primary btn-sm" type="button" data-quantity-minus>
                                         <i class="bi-dash"></i>
                                     </button>
-                                    <input type="number" name="quantity" class="form-control form-control-sm text-center quantity-input" value="1" min="1" required>
+                                    <input type="number" name="quantity"
+                                        class="form-control form-control-sm text-center quantity-input" value="1"
+                                        min="1" required>
                                     <button class="btn btn-outline-primary btn-sm" type="button" data-quantity-plus>
                                         <i class="bi-plus"></i>
                                     </button>
@@ -219,7 +223,8 @@
                             <!-- Categoría -->
                             <div class="col-8 col-lg-4">
                                 <label class="form-label">Categoría</label>
-                                <select name="category_id" class="form-control w-auto" id="categoryProductCreate" required>
+                                <select name="category_id" class="form-control w-auto" id="categoryProductCreate"
+                                    required>
                                     <option value="">Seleccionar categoría</option>
                                 </select>
                             </div>
@@ -243,13 +248,19 @@
                             <!-- Imagen -->
                             <div class="col-12">
                                 <label class="form-label">Imagen</label>
-                                <input type="file" name="image" class="form-control" id="createImage">
+                                <input type="file" name="image" class="form-control mb-3" id="createImage">
 
                                 <!-- Preview -->
-                                <div class="mt-2 d-none" id="createImagePreviewWrapper">
-                                    <img id="createNewImagePreview" class="img-fluid rounded border"
-                                        style="max-height: 150px;">
+                                <div class="rounded p-2 d-none" id="createImagePreviewWrapper"
+                                    style="min-height: 250px; background-color: #f0f8f4;">
+                                    <div class="bg-white rounded d-flex align-items-center justify-content-center h-100 image-wrapper"
+                                        style="min-height: calc(250px - 1rem);">
+                                        <img id="createNewImagePreview" class="img-fluid rounded image-preview"
+                                            style="max-height: 220px; object-fit: contain; border: 2px solid #a3ecca;">
+                                    </div>
                                 </div>
+
+                                <small class="text-muted d-block mt-2">JPG, PNG o WebP. Máximo 1MB.</small>
                             </div>
 
                         </div>
@@ -301,7 +312,9 @@
                                     <button class="btn btn-outline-primary btn-sm" type="button" data-price-minus>
                                         <i class="bi-dash"></i>
                                     </button>
-                                    <input type="number" name="price" id="editPrice" class="form-control form-control-sm text-center price-input" step="0.01" required>
+                                    <input type="number" name="price" id="editPrice"
+                                        class="form-control form-control-sm text-center price-input" step="0.01"
+                                        required>
                                     <button class="btn btn-outline-primary btn-sm" type="button" data-price-plus>
                                         <i class="bi-plus"></i>
                                     </button>
@@ -315,7 +328,9 @@
                                     <button class="btn btn-outline-primary btn-sm" type="button" data-quantity-minus>
                                         <i class="bi-dash"></i>
                                     </button>
-                                    <input type="number" name="quantity" id="editQuantity" class="form-control form-control-sm text-center quantity-input" value="1" min="1" required>
+                                    <input type="number" name="quantity" id="editQuantity"
+                                        class="form-control form-control-sm text-center quantity-input" value="1"
+                                        min="1" required>
                                     <button class="btn btn-outline-primary btn-sm" type="button" data-quantity-plus>
                                         <i class="bi-plus"></i>
                                     </button>
@@ -346,24 +361,33 @@
                             </div>
 
                             <!-- Imagen actual -->
-                            <div class="col-md-6">
+                            <div class="col-12 col-lg-6">
                                 <label class="form-label">Imagen actual</label>
-                                <div>
-                                    <img id="editImagePreview" class="img-fluid rounded border"
-                                        style="max-height:150px;">
+                                <div class="rounded p-2" style="min-height: 250px; background-color: #f0f8f4;">
+                                    <div class="bg-white rounded d-flex align-items-center justify-content-center h-100 image-wrapper"
+                                        style="min-height: calc(250px - 1rem);">
+                                        <img id="editImagePreview" class="img-fluid rounded image-preview"
+                                            style="max-height: 220px; object-fit: contain; border: 2px solid #a3ecca;">
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- Nueva imagen -->
-                            <div class="col-md-6">
+                            <div class="col-12 col-lg-6">
                                 <label class="form-label">Nueva imagen</label>
-                                <input type="file" name="image" id="editImage" class="form-control">
+                                <input type="file" name="image" id="editImage" class="form-control mb-3">
 
                                 <!-- Preview nueva -->
-                                <div class="mt-2 d-none" id="editImagePreviewWrapper">
-                                    <img id="editNewImagePreview" class="img-fluid rounded border"
-                                        style="max-height:150px;">
+                                <div class="rounded p-2 d-none" id="editImagePreviewWrapper"
+                                    style="min-height: 250px; background-color: #f0f8f4;">
+                                    <div class="bg-white rounded d-flex align-items-center justify-content-center h-100 image-wrapper"
+                                        style="min-height: calc(250px - 1rem);">
+                                        <img id="editNewImagePreview" class="img-fluid rounded image-preview"
+                                            style="max-height: 220px; object-fit: contain; border: 2px solid #a3ecca;">
+                                    </div>
                                 </div>
+
+                                <small class="text-muted d-block mt-2">JPG, PNG o WebP. Máximo 1MB.</small>
                             </div>
 
                         </div>
@@ -387,6 +411,23 @@
 
 @push('styles')
     <style>
+        .image-preview {
+            border: 2px solid #f0f8f4;
+            box-shadow: 0 0 12px rgba(240, 248, 244, .9);
+            background: white;
+            padding: 4px;
+        }
+
+        .image-wrapper {
+            background-image:
+                linear-gradient(45deg, #f5f5f5 25%, transparent 25%),
+                linear-gradient(-45deg, #f5f5f5 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #f5f5f5 75%),
+                linear-gradient(-45deg, transparent 75%, #f5f5f5 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
         .product-card {
             transition: all 0.2s ease;
             cursor: pointer;

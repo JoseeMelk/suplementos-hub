@@ -88,7 +88,7 @@
                         <span id="productDetailQuantity" class="fw-semibold text-primary">0</span>
                     </div>
 
-                    <hr class="text-secondary opacity-25 my-3">
+                    {{-- <hr class="text-secondary opacity-25 my-3"> --}}
 
                     <p id="productDetailDescription" class="text-muted mb-0 lh-lg text-break">
                     </p>
