@@ -5,6 +5,7 @@ import { renderProductList } from "../handlers/render-product.handler";
 import { renderFilter, getFilters, validateSearchInput, resetFilters } from '../handlers/filter-actions.handler';
 import { resetPagination } from '../handlers/pagination-actions.handler';
 import { initQuantitySpinners } from '../../../components/quantity-spinner';
+import { initPriceSpinners } from '../../../components/price-spinner';
 
 export async function initProductPage() {
     await renderProductList(); //Renderizar productos
@@ -45,6 +46,7 @@ export async function initProductPage() {
         btnOpenCreate.addEventListener('click', async () => {
             await openCreateModal();
             initQuantitySpinners('#createProductForm');
+            initPriceSpinners('#createProductForm');
         });
 
         btnCloseCreate?.addEventListener('click', () => {
@@ -80,6 +82,7 @@ export async function initProductPage() {
         if (editBtn) {
             await openEditModal(editBtn.dataset.id);
             initQuantitySpinners('#editProductForm');
+            initPriceSpinners('#editProductForm');
         }
 
         const deleteBtn = e.target.closest('.btn-delete');

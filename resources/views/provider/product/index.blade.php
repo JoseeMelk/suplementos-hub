@@ -182,35 +182,28 @@
                         <div class="row g-3">
 
                             <!-- Nombre -->
-                            <div class="col-md-6">
+                            <div class="col-12">
                                 <label class="form-label">Nombre</label>
                                 <input type="text" name="name" class="form-control" placeholder="Nombre del producto"
                                     required>
                             </div>
 
                             <!-- Precio -->
-                            <div class="col-md-6">
+                            <div class="col-6 col-lg-3">
                                 <label class="form-label">Precio</label>
-                                <input type="number" name="price" class="form-control" step="0.01" placeholder="0.00"
-                                    required>
+                                <div data-price-spinner class="input-group" style="max-width: 140px;">
+                                    <button class="btn btn-outline-primary btn-sm" type="button" data-price-minus>
+                                        <i class="bi-dash"></i>
+                                    </button>
+                                    <input type="number" name="price" class="form-control form-control-sm text-center price-input" step="0.01" placeholder="0.00" value="0.00" required>
+                                    <button class="btn btn-outline-primary btn-sm" type="button" data-price-plus>
+                                        <i class="bi-plus"></i>
+                                    </button>
+                                </div>
                             </div>
 
-                            <!-- Descripción -->
-                            <div class="col-12">
-                                <label class="form-label">Descripción</label>
-                                <textarea name="description" class="form-control" rows="3" placeholder="Descripción del producto"></textarea>
-                            </div>
-
-                            <!-- Categoría -->
-                            <div class="col-md-4">
-                                <label class="form-label">Categoría</label>
-                                <select name="category_id" class="form-control" id="categoryProductCreate" required>
-                                    <option value="">Seleccionar categoría</option>
-                                </select>
-                            </div>
-
-                            <!-- Cantidad disponible -->
-                            <div class="col-md-2">
+                            <!-- Cantidad -->
+                            <div class="col-6 col-lg-3">
                                 <label class="form-label">Cantidad</label>
                                 <div data-quantity-spinner class="input-group" style="max-width: 120px;">
                                     <button class="btn btn-outline-primary btn-sm" type="button" data-quantity-minus>
@@ -223,20 +216,32 @@
                                 </div>
                             </div>
 
+                            <!-- Categoría -->
+                            <div class="col-8 col-lg-4">
+                                <label class="form-label">Categoría</label>
+                                <select name="category_id" class="form-control w-auto" id="categoryProductCreate" required>
+                                    <option value="">Seleccionar categoría</option>
+                                </select>
+                            </div>
+
                             <!-- Visible -->
-                            <div class="col-md-4 d-flex align-items-center">
-                                <div class="form-check form-switch mt-3">
-                                    <!-- Si NO se marca, se envía el "0" -->
+                            <div class="col-4 col-lg-2 d-flex align-items-end">
+                                <div class="form-check form-switch">
                                     <input type="hidden" name="is_visible" value="0">
-                                    <!-- Si SE marca, este sobrescribe al anterior y envía "1" -->
                                     <input class="form-check-input" type="checkbox" name="is_visible" value="1"
                                         checked>
                                     <label class="form-check-label">Visible</label>
                                 </div>
                             </div>
 
+                            <!-- Descripción -->
+                            <div class="col-12">
+                                <label class="form-label">Descripción</label>
+                                <textarea name="description" class="form-control" rows="3" placeholder="Descripción del producto"></textarea>
+                            </div>
+
                             <!-- Imagen -->
-                            <div class="col-md-6">
+                            <div class="col-12">
                                 <label class="form-label">Imagen</label>
                                 <input type="file" name="image" class="form-control" id="createImage">
 
@@ -284,33 +289,27 @@
                         <div class="row g-3">
 
                             <!-- Nombre -->
-                            <div class="col-md-6">
+                            <div class="col-12">
                                 <label class="form-label">Nombre</label>
                                 <input type="text" name="name" id="editName" class="form-control" required>
                             </div>
 
                             <!-- Precio -->
-                            <div class="col-md-6">
+                            <div class="col-6 col-lg-3">
                                 <label class="form-label">Precio</label>
-                                <input type="number" name="price" id="editPrice" class="form-control" step="0.01"
-                                    required>
-                            </div>
-
-                            <!-- Descripción -->
-                            <div class="col-12">
-                                <label class="form-label">Descripción</label>
-                                <textarea name="description" id="editDescription" class="form-control" rows="3"></textarea>
-                            </div>
-
-                            <!-- Categoría -->
-                            <div class="col-md-4">
-                                <label class="form-label">Categoría</label>
-                                <select name="category_id" id="editCategory" class="form-control" required>
-                                </select>
+                                <div data-price-spinner class="input-group" style="max-width: 140px;">
+                                    <button class="btn btn-outline-primary btn-sm" type="button" data-price-minus>
+                                        <i class="bi-dash"></i>
+                                    </button>
+                                    <input type="number" name="price" id="editPrice" class="form-control form-control-sm text-center price-input" step="0.01" required>
+                                    <button class="btn btn-outline-primary btn-sm" type="button" data-price-plus>
+                                        <i class="bi-plus"></i>
+                                    </button>
+                                </div>
                             </div>
 
                             <!-- Cantidad -->
-                            <div class="col-md-2">
+                            <div class="col-6 col-lg-3">
                                 <label class="form-label">Cantidad</label>
                                 <div data-quantity-spinner class="input-group" style="max-width: 120px;">
                                     <button class="btn btn-outline-primary btn-sm" type="button" data-quantity-minus>
@@ -323,14 +322,27 @@
                                 </div>
                             </div>
 
+                            <!-- Categoría -->
+                            <div class="col-8 col-lg-3">
+                                <label class="form-label">Categoría</label>
+                                <select name="category_id" id="editCategory" class="form-control w-auto" required>
+                                </select>
+                            </div>
+
                             <!-- Visible -->
-                            <div class="col-md-4 d-flex align-items-center">
-                                <div class="form-check form-switch mt-3">
+                            <div class="col-4 col-lg-3 d-flex align-items-end">
+                                <div class="form-check form-switch">
                                     <input type="hidden" name="is_visible" value="0">
                                     <input class="form-check-input" type="checkbox" id="editVisible" name="is_visible"
                                         value="1">
                                     <label class="form-check-label">Visible</label>
                                 </div>
+                            </div>
+
+                            <!-- Descripción -->
+                            <div class="col-12">
+                                <label class="form-label">Descripción</label>
+                                <textarea name="description" id="editDescription" class="form-control" rows="3"></textarea>
                             </div>
 
                             <!-- Imagen actual -->
@@ -428,6 +440,16 @@
         }
 
         .quantity-input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .price-input::-webkit-outer-spin-button,
+        .price-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .price-input[type=number] {
             -moz-appearance: textfield;
         }
     </style>
