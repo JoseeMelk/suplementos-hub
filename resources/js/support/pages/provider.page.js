@@ -9,6 +9,7 @@ import { ticketCard, ticketEmpty } from '../components/ticket-card.js';
 import { conversationCard, conversationEmpty } from "../components/conversation-card.js";
 import { autoResizeTextarea } from "../../utils/chat-input.js";
 import { chatHeader, chatInput, chatBlocked, renderMessages, chatMessage } from '../components/chat-panel.js';
+import { startPolling, stopPolling, updateLastMessageId } from '../utils/message-polling.js';
 
 async function createNewTicket(form, btnSubmitNewTicket) {
 
@@ -44,28 +45,26 @@ async function createNewTicket(form, btnSubmitNewTicket) {
 
 async function sendMessage(conversationId) {
     const chatInput = document.getElementById('chat-input-msg');
-    try{
+    try {
         const payload = {
             'message': chatInput.value.trim()
         }
-        console.log('Antes de pasarle al servicio: ', payload);
-        
+
         const response = await storeMessage(conversationId, payload);
-        console.log(response);
-        if(!response.ok){
+        if (!response.ok) {
             throw new Error("Error al enviar mensaje: " + response.httpStatus);
         }
+        updateLastMessageId(response.data.id);
 
-        chatInput.value = '';       
+        chatInput.value = '';
         return response.data;
-    }catch(error){
+    } catch (error) {
         alert.error('Error', 'Ocurrió un error al enviar el mensaje.');
         return null;
     }
 }
 
 function newTicketAcction() {
-    // Constantes nuevo ticket
     const newTicketModalId = 'new-ticket-modal';
     const btnOpenNewTicketModal = document.getElementById('btn-open-new-ticket-modal');
     const btnCloseNewTicketModal = document.getElementById('btn-close-new-ticket-modal');
@@ -84,7 +83,7 @@ function newTicketAcction() {
 
         if (!form.checkValidity()) {
             form.classList.add('was-validated');
-            form.reportValidity(); // <- esto hace que aparezcan mensajes nativos
+            form.reportValidity();
             return;
         }
 
@@ -101,7 +100,6 @@ function newTicketAcction() {
 }
 
 async function initTicket() {
-    //obtener ticket
     const activeTicket = await getActiveTicket();
     let conversation = null;
     let messages = null;
@@ -109,10 +107,11 @@ async function initTicket() {
     let ticketIsOpen = false;
     let ticketIsInProgress = false;
 
-    //obtener elemento html de ticket
     const ticketElement = document.getElementById('in-progress-ticket');
 
-    //Si no existe ticket
+    // Detener polling anterior antes de re-inicializar
+    stopPolling();
+
     if (!activeTicket.data) {
         ticketElement.innerHTML = ticketEmpty();
         newTicketAcction();
@@ -121,47 +120,25 @@ async function initTicket() {
         notExistTicket = true;
     }
 
-    //Si existe ticket y su estado es "open"
     ticketIsOpen = activeTicket.data && activeTicket.data.status === 'open';
-    console.log(ticketIsOpen);
-    if(ticketIsOpen){
+    if (ticketIsOpen) {
         notExistTicket = false;
         ticketElement.innerHTML = ticketCard(activeTicket.data);
         initConversation(notExistTicket, ticketIsOpen, ticketIsInProgress);
-        console.log(activeTicket.data);
-        
         chatWithOpenTicket(activeTicket.data.tracking_number);
     }
 
-    //Si existe ticket y su estado es en progreso
     ticketIsInProgress = activeTicket.data && activeTicket.data.status === 'in_progress';
-    console.log(ticketIsInProgress);
-    if(ticketIsInProgress){
+    if (ticketIsInProgress) {
         conversation = await getActiveConversation();
         messages = await getMessages(conversation.data.id);
-        console.log(messages);
-        
+
         notExistTicket = false;
         ticketElement.innerHTML = ticketCard(activeTicket.data);
         initConversation(notExistTicket, ticketIsOpen, conversation.data);
-        console.log(activeTicket.data);
-        
+
         chatWithInProgressTicket(activeTicket.data, messages.data, conversation.data.id);
     }
-
-    // else {
-    //     ticketElement.innerHTML = ticketCard(activeTicket.data);
-        
-
-    //     notExistTicket = false;
-    // }
-
-    // const conversation = await getConversation();
-
-    // const ticketIsClosed = activeTicket.data && activeTicket.data.status === 'closed';
-    // const ticketIsOpen = activeTicket.data && activeTicket.data.status === 'open';
-
-    // initConversation(notExistTicket, ticketIsOpen, ticketIsClosed, conversation.data)
 }
 
 async function initConversation(notExistTicket, ticketIsOpen, conversation = null) {
@@ -174,18 +151,13 @@ async function initConversation(notExistTicket, ticketIsOpen, conversation = nul
         conversationInfoElement.innerHTML = conversationEmpty('La conversacion estara disponible una vez que se le de seguimiento a tu ticket.');
         return;
     }
-
-    // if (ticketIsClosed) {
-    //     conversationInfoElement.innerHTML = conversationEmpty('La conversacion no esta disponible.');
-    //     return;
-    // }
-    if(conversation != null) {
+    if (conversation != null) {
         conversationInfoElement.innerHTML = conversationCard(conversation);
     }
 }
 
-//Estados del chat segun ticket
-function chatWithNoTicket() { //Ticket No existe
+function chatWithNoTicket() {
+    stopPolling();
     const chatElement = document.getElementById('chat-container');
 
     const html = [
@@ -196,7 +168,8 @@ function chatWithNoTicket() { //Ticket No existe
     chatElement.innerHTML = html;
 }
 
-function chatWithOpenTicket(trackingNumber) { //Ticket abierto
+function chatWithOpenTicket(trackingNumber) {
+    stopPolling();
     const chatElement = document.getElementById('chat-container');
     const html = [
         chatHeader('Sin asignar', 'SA', '#9ca3af', trackingNumber),
@@ -205,7 +178,6 @@ function chatWithOpenTicket(trackingNumber) { //Ticket abierto
 
     chatElement.innerHTML = html;
 }
-
 
 function chatWithInProgressTicket(ticket, messages, conversationId) {
     const chatElement = document.getElementById('chat-container');
@@ -228,13 +200,12 @@ function chatWithInProgressTicket(ticket, messages, conversationId) {
 
     chatElement.innerHTML = html;
 
-    // 🔥 scroll inicial al último mensaje
+    // scroll inicial al último mensaje
     requestAnimationFrame(() => {
         const container = document.getElementById('chat-messages');
         container.scrollTop = container.scrollHeight;
     });
 
-    // 🔥 evitar duplicar listeners
     chatElement.addEventListener('input', (e) => {
         if (e.target.classList.contains('chat-ta')) {
             autoResizeTextarea(e.target);
@@ -242,30 +213,55 @@ function chatWithInProgressTicket(ticket, messages, conversationId) {
     });
 
     const btnSendMsg = document.getElementById('btn-send-msg');
+    const msgInput = document.getElementById('chat-input-msg');
 
-    btnSendMsg.addEventListener('click', async () => {
+    const send = async () => {
         const newMessage = await sendMessage(conversationId);
 
         if (!newMessage) return;
 
         const container = document.getElementById('chat-messages');
-        console.log(newMessage);
-        
+
         container.insertAdjacentHTML(
             'beforeend',
             chatMessage(newMessage, avatarColor, getInitials(ticket.assigned_to, false))
         );
 
-        // 🔥 scroll al nuevo mensaje
+        requestAnimationFrame(() => {
+            container.scrollTop = container.scrollHeight;
+        });
+    };
+
+    btnSendMsg.addEventListener('click', send);
+
+    msgInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault(); // evita salto de línea
+            send();
+        }
+    });
+    // ── Polling: detectar mensajes nuevos del admin ──
+    startPolling(conversationId, messages, (newMsgs) => {
+        const container = document.getElementById('chat-messages');
+        if (!container) {
+            stopPolling();
+            return;
+        }
+
+        newMsgs.forEach(msg => {
+            container.insertAdjacentHTML(
+                'beforeend',
+                chatMessage(msg, avatarColor, initials)
+            );
+        });
+
         requestAnimationFrame(() => {
             container.scrollTop = container.scrollHeight;
         });
     });
 }
 
-
 async function initProviderSupport() {
-    //alert.message('Soporte para proveedores.', 'Se recomienda usar una computadora para una mejor experiencia.');
     initTicket();
 }
 

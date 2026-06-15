@@ -1,13 +1,14 @@
 import { getAdminTickets, acceptTicket, closeTicket } from '../services/ticket.service.js';
-import { getMessages, storeMessage }                  from '../services/message.service.js';
-import { getAdminConversations }                      from '../services/conversation.service.js';
-import { handleResponse }                             from '../../utils/http-handler.js';
-import { getInitials }                                from '../../utils/utlis.js';
-import { alert }                                      from '../../lib/alert.js';
-import { autoResizeTextarea }                         from '../../utils/chat-input.js';
+import { getMessages, storeMessage } from '../services/message.service.js';
+import { getAdminConversations } from '../services/conversation.service.js';
+import { handleResponse } from '../../utils/http-handler.js';
+import { getInitials } from '../../utils/utlis.js';
+import { alert } from '../../lib/alert.js';
+import { autoResizeTextarea } from '../../utils/chat-input.js';
 import { ticketList, updateTicketRows, updateFilterCounts } from '../components/ticket-list.js';
-import { ticketDetail, ticketDetailEmpty }            from '../components/ticket-detail.js';
+import { ticketDetail, ticketDetailEmpty } from '../components/ticket-detail.js';
 import { chatHeader, chatInput, chatEmpty, renderMessages, chatMessage } from '../components/chat-panel.js';
+import { startPolling, stopPolling, updateLastMessageId } from '../utils/message-polling.js';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ESTADO
@@ -20,7 +21,7 @@ let state = {
     messages:     [],
     filter:       'all',
     search:       '',
-    listMounted:  false,   // ← indica si el buscador/select ya están en el DOM
+    listMounted:  false,
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -30,17 +31,14 @@ let state = {
 function renderTicketList() {
     const panel = document.getElementById('ticket-list-panel');
     if (!panel) return;
-    console.log('filtro');
     
     const filtered = applyFilter(state.tickets, state.filter, state.search);
 
     if (!state.listMounted) {
-        // Primera vez: pintar todo (buscador + select + filas)
         panel.innerHTML = ticketList(filtered, state.selectedId, state.tickets, state.filter);
         state.listMounted = true;
         bindListEvents();
     } else {
-        // Siguientes renders: solo actualizar filas y conteos (sin destruir el input)
         updateTicketRows(filtered, state.selectedId);
         updateFilterCounts(state.tickets);
     }
@@ -64,6 +62,9 @@ function renderTicketDetail() {
 function renderChat() {
     const chatWrap = document.querySelector('.chat-panel .chat-wrap');
     if (!chatWrap) return;
+
+    // Detener polling anterior antes de re-renderizar el chat
+    stopPolling();
 
     const ticket  = state.tickets.find(t => t.id === state.selectedId);
     const hasChat = ticket?.status === 'in_progress' && state.conversation;
@@ -109,6 +110,26 @@ function renderChat() {
     });
 
     bindChatEvents(ticket);
+
+    // ── Polling: detectar mensajes nuevos del proveedor ──
+    startPolling(state.conversation.id, state.messages ?? [], (newMsgs) => {
+        const container = document.getElementById('chat-messages');
+        if (!container) {
+            stopPolling();
+            return;
+        }
+
+        newMsgs.forEach(msg => {
+            container.insertAdjacentHTML(
+                'beforeend',
+                chatMessage(msg, avatarColor, initials)
+            );
+        });
+
+        requestAnimationFrame(() => {
+            container.scrollTop = container.scrollHeight;
+        });
+    });
 }
 
 function renderCounters() {
@@ -130,7 +151,6 @@ function renderAll() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function bindListEvents() {
-    // Delegación de eventos para las filas — aguanta re-renders de updateTicketRows
     const listBody = document.getElementById('ticket-list-body');
     if (listBody) {
         listBody.addEventListener('click', async (e) => {
@@ -149,7 +169,6 @@ function bindListEvents() {
                 await loadConversationAndMessages(ticket);
             }
 
-            // Solo actualizar filas (highlight) + detalle + chat, sin montar de nuevo el buscador
             updateTicketRows(applyFilter(state.tickets, state.filter, state.search), state.selectedId);
             renderTicketDetail();
             renderChat();
@@ -157,7 +176,6 @@ function bindListEvents() {
         });
     }
 
-    // Select de filtro
     const filterSelect = document.getElementById('ticket-filter');
     if (filterSelect) {
         filterSelect.addEventListener('change', e => {
@@ -166,7 +184,6 @@ function bindListEvents() {
         });
     }
 
-    // Buscador — no pierde foco porque updateTicketRows no toca el input
     const searchInput = document.getElementById('ticket-search');
     if (searchInput) {
         searchInput.addEventListener('input', e => {
@@ -266,6 +283,7 @@ function bindChatEvents(ticket) {
         btnSend.disabled = true;
         try {
             const response = await storeMessage(state.conversation.id, { message: text });
+            updateLastMessageId(response.data.id);
             if (!response.ok) throw new Error();
             msgInput.value = '';
             msgInput.style.height = 'auto';
@@ -322,7 +340,6 @@ async function loadConversationAndMessages(ticket) {
         if (!conv) return;
         state.conversation = conv;
         const msgResponse  = await getMessages(conv.id);
-        
         state.messages     = msgResponse.ok ? (msgResponse.data ?? []) : [];
     } catch {
         state.conversation = null;
@@ -335,14 +352,12 @@ async function loadConversationAndMessages(ticket) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function applyFilter(tickets, filter, search) {
-
     return tickets.filter(t => {
         const matchFilter = filter === 'all' || t.status === filter;
         const matchSearch = !search ||
             t.title.toLowerCase().includes(search) ||
             t.tracking_number.toLowerCase().includes(search) ||
             t.reported_by.toLowerCase().includes(search);
-    
         return matchFilter && matchSearch;
     });
 }
