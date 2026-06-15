@@ -20,9 +20,15 @@ export const alert = {
     success: (title, text = '') =>
         Swal.fire({ ...base, title, text, icon: 'success', showCancelButton: false, confirmButtonText: 'Listo' }),
 
-    error: (title, text = '') =>
-        Swal.fire({ ...base, title, text, icon: 'error', showCancelButton: false, confirmButtonText: 'Entendido' }),
+    error: (title, text = '', debug = false, error = null) => {
+        if (debug) {
+            console.error(error);
+        }
+        Swal.fire({ ...base, title, text, icon: 'error', showCancelButton: false, confirmButtonText: 'Entendido' });
+    },
 
     warning: (title, text = '', confirmText = 'Continuar') =>
         Swal.fire({ ...base, title, text, icon: 'warning', showCancelButton: true, confirmButtonText: confirmText }),
+    message: (title, text = '') =>
+        Swal.fire({ ...base, title, text, icon: 'info', showCancelButton: false, confirmButtonText: 'Entendido' })
 };

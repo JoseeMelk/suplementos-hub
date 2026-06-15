@@ -30,8 +30,8 @@ export async function handleResponse(res, {
         return false;
     }
 
-    if (res.httpStatus === 403) {
-        await alert.error('Acceso denegado', res.message ?? '');
+    if(res.httpStatus === 409) {
+        await alert.error('Conflicto', res.message ?? 'El recurso ya existe');
         return false;
     }
 
@@ -39,6 +39,12 @@ export async function handleResponse(res, {
         await alert.error('No encontrado', 'El recurso no existe');
         return false;
     }
+
+    if (res.httpStatus === 403) {
+        await alert.error('Acceso denegado', res.message ?? '');
+        return false;
+    }
+
 
     if (res.httpStatus >= 500) {
         await alert.error(errorMessage, 'Error interno del servidor');

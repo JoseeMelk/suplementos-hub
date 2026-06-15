@@ -2,27 +2,30 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-//use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Enums\TicketStatus;
 
-#[Fillable(['name', 'email', 'password', 'slug', 'display_name', 'bio', 'avatar', 'status', 'catalog_active'])]
+#[Fillable([
+    'name',
+    'email',
+    'password',
+    'slug',
+    'display_name',
+    'bio',
+    'avatar',
+    'status',
+    'catalog_active'
+])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasRoles;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -36,6 +39,32 @@ class User extends Authenticatable
         return $this->hasMany(Product::class);
     }
 
+    /**
+     * Tickets creados por el proveedor
+     */
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'reported_by');
+    }
+
+    /**
+     * Tickets asignados al admin
+     */
+    public function assignedTickets()
+    {
+        return $this->hasMany(Ticket::class, 'assigned_to');
+    }
+
+    public function hasActiveTicket(): bool
+    {
+        return $this->tickets()
+            ->active()
+            ->exists();
+    }
+
+    /**
+     * Estados del usuario por scope
+     */
     public function scopeIsPending($query)
     {
         return $query->where('status', 'pending');
@@ -51,7 +80,9 @@ class User extends Authenticatable
         return $query->where('status', 'rejected');
     }
 
-    // Métodos para verificar el estado del usuario
+    /**
+     * Estados del usuario, si esta aprovado, pendiente o rechazado
+     */
     public function isApproved(): bool
     {
         return $this->status === 'approved';
@@ -65,5 +96,25 @@ class User extends Authenticatable
     public function isPending(): bool
     {
         return $this->status === 'pending';
+    }
+
+    /**
+     * Ticket actualmente en progreso
+     */
+    public function getInProgressTicket(): ?Ticket
+    {
+        return $this->tickets()
+            ->where('status', TicketStatus::IN_PROGRESS)
+            ->first();
+    }
+
+    /**
+     * Ticket activo (OPEN o IN_PROGRESS)
+     */
+    public function getActiveTicket(): ?Ticket
+    {
+        return $this->tickets()
+            ->active()
+            ->first();
     }
 }

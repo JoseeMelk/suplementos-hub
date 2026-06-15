@@ -35,6 +35,10 @@ export default defineConfig({
                 // Admin
                 'resources/js/admin/user/index.js',
                 'resources/js/admin/user/approve-reject.js',
+
+                // Support
+                'resources/js/support/pages/provider.page.js',
+                'resources/js/support/pages/admin.page.js',
             ],
             refresh: true,
         }),
